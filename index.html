@@ -29,15 +29,15 @@
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--gold); color:#fff;}
-
+ 
   a{color:inherit;}
-
+ 
   .wrap{
     max-width:760px;
     margin:0 auto;
     padding:0 24px 120px;
   }
-
+ 
   /* Header */
   header.top{
     padding:64px 0 40px;
@@ -64,7 +64,7 @@
     max-width:480px;
     margin:0;
   }
-
+ 
   /* Tabs */
   .tabs{
     display:flex;
@@ -88,10 +88,10 @@
     color:var(--navy);
     border-bottom:2px solid var(--gold);
   }
-
+ 
   .view{display:none;}
   .view.active{display:block;}
-
+ 
   /* Add button */
   .add-row{
     display:flex;
@@ -140,7 +140,7 @@
   }
   .btn.ghost:hover{border-color:var(--navy);}
   .btn.small{padding:6px 12px; font-size:13px;}
-
+ 
   /* Timeline */
   .month-group{margin-bottom:44px;}
   .month-label{
@@ -231,7 +231,7 @@
     text-decoration:underline;
     text-underline-offset:2px;
   }
-
+ 
   .empty{
     text-align:center;
     padding:80px 20px;
@@ -243,7 +243,7 @@
     color:var(--navy);
     margin-bottom:10px;
   }
-
+ 
   /* Calendar */
   .cal-nav{
     display:flex;
@@ -310,7 +310,7 @@
     .cal-cell{min-height:60px; padding:5px 4px;}
     .cal-theme{font-size:10.5px;}
   }
-
+ 
   .credit{
     position:fixed;
     right:14px;
@@ -322,7 +322,7 @@
     letter-spacing:0.01em;
     z-index:5;
   }
-
+ 
   /* Year select for best playlist */
   .year-select{
     display:flex;
@@ -384,7 +384,7 @@
     text-align:right;
     white-space:nowrap;
   }
-
+ 
   /* Modal */
   .overlay{
     display:none;
@@ -468,7 +468,7 @@
     text-underline-offset:2px;
     padding:0 0 12px;
   }
-
+ 
   /* Cover image input */
   .cover-input{
     display:flex;
@@ -514,7 +514,7 @@
     border-radius:3px;
     background:#fff;
   }
-
+ 
   /* Album grid */
   .scores-toolbar{
     display:flex;
@@ -580,7 +580,7 @@
     .album-grid{grid-template-columns:repeat(2, 1fr);}
     .cover-input{flex-direction:column;}
   }
-
+ 
   .toast{
     position:fixed;
     bottom:28px;
@@ -597,7 +597,7 @@
     z-index:80;
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
-
+ 
   @media (max-width:520px){
     header.top{padding:44px 0 30px;}
     header.top h1{font-size:30px;}
@@ -607,20 +607,20 @@
 </style>
 </head>
 <body>
-
+ 
 <div class="wrap">
   <header class="top">
     <div class="kicker">소모임 찬양 아카이브</div>
     <h1>매주, 우리가 고른 찬양</h1>
     <p>매주 정한 주제와 함께 고른 곡들을 이곳에 쌓아둡니다. 모든 기록은 소모임 구성원 모두에게 공유됩니다.</p>
   </header>
-
+ 
   <div class="tabs">
     <button class="tab-btn active" data-view="timeline">타임라인</button>
     <button class="tab-btn" data-view="scores">악보함</button>
     <button class="tab-btn" data-view="best">연말 베스트</button>
   </div>
-
+ 
   <!-- Timeline view -->
   <div class="view active" id="view-timeline">
     <div class="add-row">
@@ -640,7 +640,7 @@
       <div class="cal-grid" id="calGrid"></div>
     </div>
   </div>
-
+ 
   <!-- Sheet music library -->
   <div class="view" id="view-scores">
     <div class="scores-toolbar">
@@ -649,14 +649,14 @@
     </div>
     <div class="album-grid" id="scoresGrid"></div>
   </div>
-
+ 
   <!-- Best playlist view -->
   <div class="view" id="view-best">
     <div class="year-select" id="yearSelect"></div>
     <div id="bestContent"></div>
   </div>
 </div>
-
+ 
 <!-- Add/Edit modal -->
 <div class="overlay" id="overlay">
   <div class="modal">
@@ -685,12 +685,12 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- Day detail modal -->
 <div class="overlay" id="detailOverlay">
   <div class="modal" id="detailModal"></div>
 </div>
-
+ 
 <!-- Score add/edit modal -->
 <div class="overlay" id="scoreFormOverlay">
   <div class="modal">
@@ -720,44 +720,63 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- Score viewer modal -->
 <div class="overlay" id="scoreViewOverlay">
   <div class="modal" id="scoreViewModal"></div>
 </div>
-
+ 
 <!-- Confirm modal -->
 <div class="overlay" id="confirmOverlay">
   <div class="modal" id="confirmModal"></div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <div class="credit">제작: 바닷가 민물고기</div>
-
+ 
+<!-- Firebase (Realtime Database) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+ 
 <script>
-const STORAGE_KEY = 'worship-entries';
+/* ---------- Firebase 초기화 ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyC0eWWtcB23ww6XERoPu-5m151fBLTbhXE",
+  authDomain: "project-1162178457745130326.firebaseapp.com",
+  databaseURL: "https://project-1162178457745130326-default-rtdb.firebaseio.com",
+  projectId: "project-1162178457745130326",
+  storageBucket: "project-1162178457745130326.firebasestorage.app",
+  messagingSenderId: "213154200752",
+  appId: "1:213154200752:web:25f93096380ddaebb2cf75"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const entriesRef = db.ref('entries');
+const scoresRef = db.ref('scores');
+ 
+/* ---------- 상태값 ---------- */
 let entries = [];
 let editingId = null;
 let songFieldCount = 0;
-
+ 
 const overlay = document.getElementById('overlay');
 const timelineContent = document.getElementById('timelineContent');
 const bestContent = document.getElementById('bestContent');
 const yearSelect = document.getElementById('yearSelect');
 const songFieldsWrap = document.getElementById('songFieldsWrap');
 const toast = document.getElementById('toast');
-
+ 
 let selectedYear = null;
 let calDate = new Date();
 calDate.setDate(1);
-
+ 
 function showToast(msg){
   toast.textContent = msg;
   toast.classList.add('show');
   setTimeout(()=> toast.classList.remove('show'), 2200);
 }
-
+ 
 function confirmAction(message){
   return new Promise((resolve)=>{
     const modal = document.getElementById('confirmModal');
@@ -779,43 +798,24 @@ function confirmAction(message){
     document.getElementById('confirmNo').addEventListener('click', ()=> finish(false), { once:true });
   });
 }
-
-function uid(){
-  return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-}
-
-async function loadEntries(){
-  try{
-    const res = await window.storage.get(STORAGE_KEY, true);
-    entries = res && res.value ? JSON.parse(res.value) : [];
-  }catch(e){
-    entries = [];
-  }
-  entries.sort((a,b)=> b.date.localeCompare(a.date));
-  renderTimeline();
-  renderYearSelect();
-  renderBest();
-  renderCalendar();
-}
-
-async function saveEntries(){
-  try{
-    await window.storage.set(STORAGE_KEY, JSON.stringify(entries), true);
-  }catch(e){
-    showToast('저장에 실패했어요. 다시 시도해 주세요.');
-  }
-}
-
+ 
 function monthLabel(ym){
   const [y,m] = ym.split('-');
   return `${y}년 ${parseInt(m,10)}월`;
 }
-
+ 
 function fmtDate(dateStr){
   const d = new Date(dateStr + 'T00:00:00');
   return { md: `${d.getMonth()+1}.${d.getDate()}`, wd: ['일','월','화','수','목','금','토'][d.getDay()] };
 }
-
+ 
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+ 
+/* ---------- 타임라인 렌더 ---------- */
 function renderTimeline(){
   if(entries.length === 0){
     timelineContent.innerHTML = `<div class="empty">
@@ -826,7 +826,8 @@ function renderTimeline(){
   }
   const groups = {};
   entries.forEach(e=>{
-    const ym = e.date.slice(0,7);
+    const ym = (e.date || '').slice(0,7);
+    if(!ym) return;
     if(!groups[ym]) groups[ym] = [];
     groups[ym].push(e);
   });
@@ -834,7 +835,7 @@ function renderTimeline(){
   timelineContent.innerHTML = months.map(ym=>{
     const rows = groups[ym].map(e=>{
       const { md, wd } = fmtDate(e.date);
-      const songs = e.songs.map((s,i)=>`
+      const songs = (e.songs || []).map((s,i)=>`
         <li>
           <span class="star ${s.best ? 'on':''}" data-entry="${e.id}" data-song="${i}" title="연말 베스트로 표시">★</span>
           <span class="song-title">${escapeHtml(s.title)}</span>
@@ -861,9 +862,9 @@ function renderTimeline(){
     </div>`;
   }).join('');
 }
-
+ 
 function renderYearSelect(){
-  const years = Array.from(new Set(entries.map(e=>e.date.slice(0,4)))).sort().reverse();
+  const years = Array.from(new Set(entries.map(e=> (e.date||'').slice(0,4)).filter(Boolean))).sort().reverse();
   if(years.length === 0){
     yearSelect.innerHTML = '';
     bestContent.innerHTML = `<div class="empty"><div class="big">아직 기록이 없어요</div><div>곡을 기록하고 ★로 표시하면 연말 베스트에 모입니다.</div></div>`;
@@ -874,16 +875,16 @@ function renderYearSelect(){
     `<button class="year-chip ${y===selectedYear?'active':''}" data-year="${y}">${y}</button>`
   ).join('');
 }
-
+ 
 function renderBest(){
   if(!selectedYear){ return; }
   const best = [];
-  entries.filter(e=>e.date.startsWith(selectedYear)).forEach(e=>{
-    e.songs.forEach(s=>{
+  entries.filter(e=> (e.date||'').startsWith(selectedYear)).forEach(e=>{
+    (e.songs || []).forEach(s=>{
       if(s.best) best.push({...s, date:e.date, theme:e.theme});
     });
   });
-  best.sort((a,b)=> a.date.localeCompare(b.date));
+  best.sort((a,b)=> (a.date||'').localeCompare(b.date||''));
   if(best.length === 0){
     bestContent.innerHTML = `<div class="best-card">
       <h2>${selectedYear}년 베스트 찬양</h2>
@@ -909,28 +910,23 @@ function renderBest(){
     ${rows}
   </div>`;
 }
-
-function escapeHtml(str){
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
-}
-
+ 
+/* ---------- 달력 렌더 ---------- */
 function renderCalendar(){
   const year = calDate.getFullYear();
   const month = calDate.getMonth();
   document.getElementById('calTitle').textContent = `${year}년 ${month+1}월`;
-
+ 
   const entriesByDate = {};
-  entries.forEach(e=>{ entriesByDate[e.date] = e; });
-
+  entries.forEach(e=>{ if(e.date) entriesByDate[e.date] = e; });
+ 
   const firstOfMonth = new Date(year, month, 1);
   const startOffset = firstOfMonth.getDay();
   const daysInMonth = new Date(year, month+1, 0).getDate();
-
+ 
   const dowLabels = ['일','월','화','수','목','금','토'];
   let html = dowLabels.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-
+ 
   for(let i=0; i<startOffset; i++){
     html += `<div class="cal-cell empty-cell"></div>`;
   }
@@ -948,12 +944,12 @@ function renderCalendar(){
   }
   document.getElementById('calGrid').innerHTML = html;
 }
-
+ 
 function openDayDetail(dateStr){
   const e = entries.find(en=>en.date===dateStr);
   if(!e) return;
   const { md, wd } = fmtDate(e.date);
-  const songs = e.songs.map(s=>`
+  const songs = (e.songs || []).map(s=>`
     <li>
       <span class="song-title">${escapeHtml(s.title)}</span>
       ${s.artist ? `<span class="song-artist">· ${escapeHtml(s.artist)}</span>` : ''}
@@ -979,16 +975,16 @@ function openDayDetail(dateStr){
     openEdit(e.id);
   });
 }
-
+ 
 document.getElementById('detailOverlay').addEventListener('click', (e)=>{
   if(e.target.id === 'detailOverlay') e.target.classList.remove('open');
 });
-
+ 
 document.getElementById('calGrid').addEventListener('click', (e)=>{
   const cell = e.target.closest('.cal-cell.has-entry');
   if(cell) openDayDetail(cell.dataset.date);
 });
-
+ 
 document.getElementById('calPrev').addEventListener('click', ()=>{
   calDate.setMonth(calDate.getMonth()-1);
   renderCalendar();
@@ -997,7 +993,7 @@ document.getElementById('calNext').addEventListener('click', ()=>{
   calDate.setMonth(calDate.getMonth()+1);
   renderCalendar();
 });
-
+ 
 document.querySelectorAll('.mode-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
@@ -1008,39 +1004,22 @@ document.querySelectorAll('.mode-btn').forEach(btn=>{
     if(mode==='calendar') renderCalendar();
   });
 });
-
+ 
+/* ---------- 악보함 상태값 ---------- */
 let scores = [];
 let scoreEditingId = null;
-let pendingScoreImage = null; // null = untouched, '' = removed, string = new dataURL/url
+let pendingScoreImage = null; // null = 안 건드림, '' = 제거함, string = 새 이미지
 let scoreQuery = '';
-const scoreCache = {};
-
-async function loadScores(){
-  try{
-    const res = await window.storage.get('worship-scores', true);
-    scores = res && res.value ? JSON.parse(res.value) : [];
-  }catch(e){
-    scores = [];
-  }
-}
-
-async function saveScores(){
-  try{
-    await window.storage.set('worship-scores', JSON.stringify(scores), true);
-  }catch(e){
-    showToast('저장에 실패했어요. 다시 시도해 주세요.');
-  }
-}
-
+ 
 function renderScores(){
   const grid = document.getElementById('scoresGrid');
   const q = scoreQuery.trim();
   let list = scores.slice();
   if(q){
-    list = list.filter(s => s.title.includes(q) || (s.artist && s.artist.includes(q)));
+    list = list.filter(s => (s.title && s.title.includes(q)) || (s.artist && s.artist.includes(q)));
   }
-  list.sort((a,b)=> a.title.localeCompare(b.title, 'ko'));
-
+  list.sort((a,b)=> (a.title||'').localeCompare(b.title||'', 'ko'));
+ 
   if(list.length === 0){
     grid.className = 'empty';
     grid.innerHTML = q
@@ -1051,40 +1030,20 @@ function renderScores(){
   grid.className = 'album-grid';
   grid.innerHTML = list.map(s=>`
     <div class="album-card" data-id="${s.id}">
-      <div class="album-thumb loading" id="score-thumb-${s.id}">불러오는 중</div>
+      <div class="album-thumb">${s.imageData ? `<img src="${s.imageData}" alt="">` : '이미지 없음'}</div>
       <div class="album-cap">${escapeHtml(s.title)}${s.artist ? `<span class="date">${escapeHtml(s.artist)}</span>` : ''}</div>
     </div>`).join('');
-
+ 
   grid.querySelectorAll('.album-card').forEach(card=>{
     card.addEventListener('click', ()=> openScoreViewer(card.dataset.id));
   });
-
-  list.forEach(async (s)=>{
-    const thumb = document.getElementById('score-thumb-' + s.id);
-    if(!s.hasImage){
-      if(thumb){ thumb.classList.remove('loading'); thumb.textContent = '이미지 없음'; }
-      return;
-    }
-    let data = scoreCache[s.id];
-    if(!data){
-      try{
-        const res = await window.storage.get('score-img:' + s.id, true);
-        data = res && res.value ? res.value : null;
-        scoreCache[s.id] = data;
-      }catch(err){ data = null; }
-    }
-    if(thumb){
-      thumb.classList.remove('loading');
-      thumb.innerHTML = data ? `<img src="${data}" alt="">` : '이미지 없음';
-    }
-  });
 }
-
+ 
 function openScoreViewer(id){
   const s = scores.find(x=>x.id===id);
   if(!s) return;
   document.getElementById('scoreViewModal').innerHTML = `
-    <div class="cover-preview" id="scoreViewImg" style="width:100%; height:320px; margin-bottom:16px;">불러오는 중</div>
+    <div class="cover-preview" style="width:100%; height:320px; margin-bottom:16px;">${s.imageData ? `<img src="${s.imageData}" alt="">` : '이미지 없음'}</div>
     <h2>${escapeHtml(s.title)}</h2>
     ${s.artist ? `<div class="recorder">${escapeHtml(s.artist)}</div>` : ''}
     <div class="modal-actions">
@@ -1096,18 +1055,6 @@ function openScoreViewer(id){
     </div>
   `;
   document.getElementById('scoreViewOverlay').classList.add('open');
-  (async ()=>{
-    let data = scoreCache[id];
-    if(!data && s.hasImage){
-      try{
-        const res = await window.storage.get('score-img:' + id, true);
-        data = res && res.value ? res.value : null;
-        scoreCache[id] = data;
-      }catch(err){ data = null; }
-    }
-    const el = document.getElementById('scoreViewImg');
-    if(el) el.innerHTML = data ? `<img src="${data}" alt="">` : '이미지 없음';
-  })();
   document.getElementById('scoreViewClose').addEventListener('click', ()=>{
     document.getElementById('scoreViewOverlay').classList.remove('open');
   });
@@ -1117,16 +1064,16 @@ function openScoreViewer(id){
   });
   document.getElementById('scoreViewDelete').addEventListener('click', async ()=>{
     if(!(await confirmAction('이 악보와 이미지가 완전히 삭제되고, 되돌릴 수 없어요.'))) return;
-    scores = scores.filter(x=>x.id !== id);
-    try{ await window.storage.delete('score-img:' + id, true); }catch(err){}
-    delete scoreCache[id];
-    await saveScores();
-    document.getElementById('scoreViewOverlay').classList.remove('open');
-    renderScores();
-    showToast('삭제했어요.');
+    try{
+      await scoresRef.child(id).remove();
+      document.getElementById('scoreViewOverlay').classList.remove('open');
+      showToast('삭제했어요.');
+    }catch(err){
+      showToast('삭제에 실패했어요. 다시 시도해 주세요.');
+    }
   });
 }
-
+ 
 function updateScorePreview(){
   const el = document.getElementById('scorePreview');
   if(pendingScoreImage){
@@ -1135,21 +1082,22 @@ function updateScorePreview(){
     el.innerHTML = '이미지 없음';
   }
 }
-
+ 
+/* 모바일 대용량 이미지 안전 압축 (Realtime DB 용량 제한 최적화) */
 function resizeImageFile(file){
   return new Promise((resolve, reject)=>{
     const reader = new FileReader();
     reader.onload = (ev)=>{
       const img = new Image();
       img.onload = ()=>{
-        const maxDim = 900;
+        const maxDim = 800; // 가로/세로 최대 800px로 리사이징
         let w = img.width, h = img.height;
         if(w > h){ if(w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; } }
         else { if(h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; } }
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', 0.78));
+        resolve(canvas.toDataURL('image/jpeg', 0.65)); // 65% 압축 품질
       };
       img.onerror = ()=> reject(new Error('image load failed'));
       img.src = ev.target.result;
@@ -1158,7 +1106,7 @@ function resizeImageFile(file){
     reader.readAsDataURL(file);
   });
 }
-
+ 
 function resetScoreModal(){
   scoreEditingId = null;
   document.getElementById('s-title').value = '';
@@ -1169,13 +1117,13 @@ function resetScoreModal(){
   updateScorePreview();
   document.getElementById('scoreModalTitle').textContent = '악보 추가';
 }
-
+ 
 function openAddScore(){
   resetScoreModal();
   document.getElementById('scoreFormOverlay').classList.add('open');
 }
-
-async function openScoreEdit(id){
+ 
+function openScoreEdit(id){
   const s = scores.find(x=>x.id===id);
   if(!s) return;
   scoreEditingId = id;
@@ -1184,24 +1132,11 @@ async function openScoreEdit(id){
   document.getElementById('s-file').value = '';
   document.getElementById('s-url').value = '';
   document.getElementById('scoreModalTitle').textContent = '악보 수정';
+  pendingScoreImage = s.imageData || null;
+  updateScorePreview();
   document.getElementById('scoreFormOverlay').classList.add('open');
-  if(s.hasImage){
-    pendingScoreImage = scoreCache[id] || null;
-    updateScorePreview();
-    if(!pendingScoreImage){
-      try{
-        const res = await window.storage.get('score-img:' + id, true);
-        pendingScoreImage = res && res.value ? res.value : null;
-        scoreCache[id] = pendingScoreImage;
-      }catch(err){ pendingScoreImage = null; }
-      updateScorePreview();
-    }
-  } else {
-    pendingScoreImage = null;
-    updateScorePreview();
-  }
 }
-
+ 
 document.getElementById('openAddScore').addEventListener('click', openAddScore);
 document.getElementById('scoreCancelBtn').addEventListener('click', ()=>{
   document.getElementById('scoreFormOverlay').classList.remove('open');
@@ -1212,7 +1147,7 @@ document.getElementById('scoreFormOverlay').addEventListener('click', (e)=>{
 document.getElementById('scoreViewOverlay').addEventListener('click', (e)=>{
   if(e.target.id === 'scoreViewOverlay') e.target.classList.remove('open');
 });
-
+ 
 document.getElementById('s-file').addEventListener('change', async (e)=>{
   const file = e.target.files[0];
   if(!file) return;
@@ -1238,47 +1173,43 @@ document.getElementById('removeScoreImgBtn').addEventListener('click', ()=>{
   document.getElementById('s-url').value = '';
   updateScorePreview();
 });
-
+ 
 document.getElementById('scoreSaveBtn').addEventListener('click', async ()=>{
   const title = document.getElementById('s-title').value.trim();
   const artist = document.getElementById('s-artist').value.trim();
   if(!title){ showToast('곡 제목을 입력해 주세요.'); return; }
-
-  let id = scoreEditingId;
-  if(scoreEditingId){
-    const s = scores.find(x=>x.id===scoreEditingId);
-    s.title = title;
-    s.artist = artist;
-  } else {
-    id = uid();
-    scores.push({ id, title, artist, hasImage:false });
-  }
-  const s = scores.find(x=>x.id===id);
-  if(pendingScoreImage){
-    try{
-      await window.storage.set('score-img:' + id, pendingScoreImage, true);
-      s.hasImage = true;
-      scoreCache[id] = pendingScoreImage;
-    }catch(err){
-      showToast('이미지 저장에 실패했어요. 나머지는 저장됐어요.');
-    }
+ 
+  let imageData = null;
+  if(pendingScoreImage !== null && pendingScoreImage !== ''){
+    imageData = pendingScoreImage;
   } else if(pendingScoreImage === ''){
-    try{ await window.storage.delete('score-img:' + id, true); }catch(err){}
-    s.hasImage = false;
-    delete scoreCache[id];
+    imageData = null;
+  } else if(scoreEditingId){
+    const existing = scores.find(x=>x.id===scoreEditingId);
+    imageData = existing ? (existing.imageData || null) : null;
   }
-  await saveScores();
-  document.getElementById('scoreFormOverlay').classList.remove('open');
-  renderScores();
-  showToast('저장했어요.');
+ 
+  const scoreData = { title, artist, imageData };
+ 
+  try{
+    if(scoreEditingId){
+      await scoresRef.child(scoreEditingId).update(scoreData);
+    } else {
+      await scoresRef.push(scoreData);
+    }
+    document.getElementById('scoreFormOverlay').classList.remove('open');
+    showToast('저장했어요.');
+  }catch(err){
+    showToast('저장에 실패했어요. 이미지 크기를 확인해 주세요.');
+  }
 });
-
+ 
 document.getElementById('scoreSearch').addEventListener('input', (e)=>{
   scoreQuery = e.target.value;
   renderScores();
 });
-
-// Tabs
+ 
+/* ---------- 탭 전환 ---------- */
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -1288,8 +1219,8 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     if(btn.dataset.view === 'scores') renderScores();
   });
 });
-
-// Year select
+ 
+/* ---------- 연말 베스트 연도 선택 ---------- */
 yearSelect.addEventListener('click', (e)=>{
   const chip = e.target.closest('.year-chip');
   if(!chip) return;
@@ -1297,20 +1228,20 @@ yearSelect.addEventListener('click', (e)=>{
   renderYearSelect();
   renderBest();
 });
-
-// Star toggle (best of year)
+ 
+/* ---------- 타임라인 상호작용 (★ 토글 / 수정 / 삭제) ---------- */
 timelineContent.addEventListener('click', async (e)=>{
   const star = e.target.closest('.star');
   if(star){
     const entry = entries.find(en=>en.id === star.dataset.entry);
     if(entry){
-      const song = entry.songs[parseInt(star.dataset.song,10)];
-      song.best = !song.best;
-      await saveEntries();
-      renderTimeline();
-      renderYearSelect();
-      renderBest();
-      renderCalendar();
+      const idx = parseInt(star.dataset.song,10);
+      const updatedSongs = (entry.songs || []).map((s,i)=> i===idx ? { ...s, best: !s.best } : s);
+      try{
+        await entriesRef.child(entry.id).update({ songs: updatedSongs });
+      }catch(err){
+        showToast('저장에 실패했어요. 다시 시도해 주세요.');
+      }
     }
     return;
   }
@@ -1319,19 +1250,18 @@ timelineContent.addEventListener('click', async (e)=>{
   const delId = e.target.closest('[data-delete]');
   if(delId){ deleteEntry(delId.dataset.delete); return; }
 });
-
+ 
 async function deleteEntry(id){
   if(!(await confirmAction('이 주차 기록(곡 목록, 코멘트 포함)이 완전히 삭제되고, 되돌릴 수 없어요.'))) return;
-  entries = entries.filter(e=>e.id !== id);
-  await saveEntries();
-  renderTimeline();
-  renderYearSelect();
-  renderBest();
-  renderCalendar();
-  showToast('삭제했어요.');
+  try{
+    await entriesRef.child(id).remove();
+    showToast('삭제했어요.');
+  }catch(err){
+    showToast('삭제에 실패했어요. 다시 시도해 주세요.');
+  }
 }
-
-// Modal - song fields
+ 
+/* ---------- 곡 입력 필드 관리 ---------- */
 function addSongField(data){
   songFieldCount++;
   const idx = songFieldCount;
@@ -1357,7 +1287,7 @@ function addSongField(data){
   `;
   songFieldsWrap.appendChild(div);
 }
-
+ 
 songFieldsWrap.addEventListener('click', (e)=>{
   const rm = e.target.closest('[data-remove]');
   if(rm){
@@ -1366,9 +1296,9 @@ songFieldsWrap.addEventListener('click', (e)=>{
     else showToast('최소 한 곡은 있어야 해요.');
   }
 });
-
+ 
 document.getElementById('addSongBtn').addEventListener('click', ()=> addSongField());
-
+ 
 function resetModal(){
   editingId = null;
   songFieldCount = 0;
@@ -1380,12 +1310,12 @@ function resetModal(){
   addSongField();
   document.getElementById('modalTitle').textContent = '이번 주 찬양 기록';
 }
-
+ 
 function openAdd(){
   resetModal();
   overlay.classList.add('open');
 }
-
+ 
 function openEdit(id){
   const entry = entries.find(e=>e.id===id);
   if(!entry) return;
@@ -1396,22 +1326,22 @@ function openEdit(id){
   document.getElementById('f-theme').value = entry.theme || '';
   document.getElementById('f-name').value = entry.name || '';
   document.getElementById('f-comment').value = entry.comment || '';
-  entry.songs.forEach(s => addSongField(s));
+  (entry.songs || []).forEach(s => addSongField(s));
   document.getElementById('modalTitle').textContent = '기록 수정';
   overlay.classList.add('open');
 }
-
+ 
 document.getElementById('openAdd').addEventListener('click', openAdd);
 document.getElementById('cancelBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
 overlay.addEventListener('click', (e)=>{ if(e.target === overlay) overlay.classList.remove('open'); });
-
+ 
 document.getElementById('saveBtn').addEventListener('click', async ()=>{
   const date = document.getElementById('f-date').value;
   const theme = document.getElementById('f-theme').value.trim();
   const name = document.getElementById('f-name').value.trim();
   const comment = document.getElementById('f-comment').value.trim();
   if(!date){ showToast('날짜를 선택해 주세요.'); return; }
-
+ 
   const songEls = songFieldsWrap.querySelectorAll('.song-fields');
   const songs = [];
   songEls.forEach(el=>{
@@ -1421,35 +1351,53 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
     if(title) songs.push({ title, artist, link, best: false });
   });
   if(songs.length === 0){ showToast('곡을 최소 한 개 이상 입력해 주세요.'); return; }
-
+ 
+  let finalSongs = songs;
   if(editingId){
     const entry = entries.find(e=>e.id===editingId);
-    // preserve existing 'best' flags when title matches
-    songs.forEach(s=>{
-      const prev = entry.songs.find(p=>p.title===s.title);
-      if(prev) s.best = prev.best;
-    });
-    entry.date = date;
-    entry.theme = theme;
-    entry.name = name;
-    entry.comment = comment;
-    entry.songs = songs;
-  } else {
-    entries.push({ id: uid(), date, theme, name, comment, songs });
+    if(entry){
+      finalSongs = songs.map(s=>{
+        const prev = (entry.songs || []).find(p=>p.title===s.title);
+        return prev ? { ...s, best: prev.best } : s;
+      });
+    }
   }
-
-  entries.sort((a,b)=> b.date.localeCompare(a.date));
-  await saveEntries();
-  overlay.classList.remove('open');
+ 
+  const entryData = { date, theme, name, comment, songs: finalSongs };
+ 
+  try{
+    if(editingId){
+      await entriesRef.child(editingId).update(entryData);
+    } else {
+      await entriesRef.push(entryData);
+    }
+    overlay.classList.remove('open');
+    showToast('저장했어요.');
+  }catch(err){
+    showToast('저장에 실패했어요. 다시 시도해 주세요.');
+  }
+});
+ 
+/* ---------- 실시간 동기화 시작 ---------- */
+entriesRef.on('value', (snapshot)=>{
+  const val = snapshot.val() || {};
+  entries = Object.keys(val).map(key => ({ id: key, ...val[key] }));
+  entries.sort((a,b)=> (b.date || '').localeCompare(a.date || ''));
   renderTimeline();
   renderYearSelect();
   renderBest();
   renderCalendar();
-  showToast('저장했어요.');
+}, ()=>{
+  showToast('실시간 연결에 실패했어요. 새로고침해 보세요.');
 });
-
-loadEntries();
-loadScores();
+ 
+scoresRef.on('value', (snapshot)=>{
+  const val = snapshot.val() || {};
+  scores = Object.keys(val).map(key => ({ id: key, ...val[key] }));
+  renderScores();
+}, ()=>{
+  showToast('실시간 연결에 실패했어요. 새로고침해 보세요.');
+});
 </script>
 </body>
 </html>
