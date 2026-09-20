@@ -779,6 +779,41 @@ root{
     .cal-theme .week-theme-badge{font-size:9px;padding:2px 4px;min-height:18px}
   }
 
+
+  /* v10 — 악보·가사 뷰어 */
+  .music-sheet-btn{
+    border:1px solid #5B5B56;background:#fff;color:var(--navy);
+    border-radius:9px;padding:6px 9px;margin-left:6px;cursor:pointer;
+    font:inherit;font-size:12px;font-weight:700;
+  }
+  .music-sheet-btn:hover{background:#F4F5F6;}
+  .music-modal{max-width:760px;}
+  .music-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px;}
+  .music-head h2{margin:0 0 4px;font-size:23px;}
+  .music-sub{color:var(--ink-soft);font-size:13px;}
+  .music-tabs{display:flex;gap:7px;border-bottom:1px solid #B9B9B2;margin-bottom:16px;}
+  .music-tab{border:0;background:transparent;padding:10px 12px;cursor:pointer;font:inherit;color:var(--ink-soft);}
+  .music-tab.active{color:var(--navy);font-weight:700;border-bottom:3px solid var(--sage);}
+  .music-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0 14px;}
+  .music-toolbar button,.music-toolbar select{
+    border:1px solid #686862;background:#fff;border-radius:9px;padding:7px 10px;font:inherit;color:var(--ink);
+  }
+  .music-toolbar button{cursor:pointer;}
+  .key-label{font-weight:700;margin-right:2px;}
+  .sheet-content{
+    white-space:pre-wrap;line-height:1.9;font-size:17px;background:#fff;
+    border:1px solid #686862;border-radius:14px;padding:20px;min-height:190px;
+  }
+  .sheet-content.lyrics-only{font-size:20px;line-height:2.05;}
+  .sheet-empty{text-align:center;color:var(--ink-soft);padding:34px 12px;}
+  .sheet-empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:7px;}
+  .music-close{white-space:nowrap;}
+  @media(max-width:640px){
+    .music-head{display:block}.music-close{margin-top:10px}
+    .sheet-content{padding:16px;font-size:16px}
+    .sheet-content.lyrics-only{font-size:19px}
+  }
+
 </style>
 </head>
 <body>
@@ -901,6 +936,42 @@ root{
   <div class="modal" id="scoreViewModal"></div>
 </div>
  
+
+<!-- Guitar sheet / lyrics modal -->
+<div class="overlay" id="musicSheetOverlay">
+  <div class="modal music-modal">
+    <div class="music-head">
+      <div>
+        <h2 id="musicSheetTitle">악보·가사</h2>
+        <div class="music-sub" id="musicSheetArtist"></div>
+      </div>
+      <button class="btn ghost small music-close" id="musicSheetClose">닫기</button>
+    </div>
+    <div class="music-tabs">
+      <button class="music-tab active" data-music-tab="guitar">🎸 기타 악보</button>
+      <button class="music-tab" data-music-tab="lyrics">🎤 가사</button>
+    </div>
+    <div id="guitarPane">
+      <div class="music-toolbar">
+        <span class="key-label">Key <span id="currentKey">-</span></span>
+        <button type="button" id="keyDown">−1</button>
+        <button type="button" id="keyUp">+1</button>
+        <select id="keySelect" aria-label="키 선택"></select>
+        <span id="capoInfo" class="music-sub"></span>
+      </div>
+      <div class="sheet-content" id="guitarContent"></div>
+    </div>
+    <div id="lyricsPane" style="display:none;">
+      <div class="music-toolbar">
+        <span class="music-sub">글씨 크기</span>
+        <button type="button" id="lyricsSmaller">A−</button>
+        <button type="button" id="lyricsLarger">A+</button>
+      </div>
+      <div class="sheet-content lyrics-only" id="lyricsContent"></div>
+    </div>
+  </div>
+</div>
+
 <!-- Confirm modal -->
 <div class="overlay" id="confirmOverlay">
   <div class="modal" id="confirmModal"></div>
@@ -1016,6 +1087,7 @@ function renderTimeline(){
           <span class="song-title">${escapeHtml(s.title)}</span>
           ${s.artist ? `<span class="song-artist">· ${escapeHtml(s.artist)}</span>` : ''}
           ${s.link ? `<button type="button" class="listen-btn" data-url="${escapeHtml(s.link)}" data-title="${escapeHtml(s.title || '찬양')}" onclick="toggleSongPlayer(event)">▶ 듣기</button><div class="inline-player"></div>` : ''}
+          <button type="button" class="music-sheet-btn" data-music-entry="${e.id}" data-music-song="${i}">🎼 악보·가사</button>
         </li>`).join('');
       return `<div class="entry">
         <div class="date"><span class="d">${md}</span>${wd}요일</div>
@@ -1193,10 +1265,11 @@ function openDayDetail(dateStr){
   const e = entries.find(en=>en.date===dateStr);
   if(!e) return;
   const { md, wd } = fmtDate(e.date);
-  const songs = (e.songs || []).map(s=>`
+  const songs = (e.songs || []).map((s,i)=>`
     <li>
       <span class="song-title">${escapeHtml(s.title)}</span>
       ${s.artist ? `<span class="song-artist">· ${escapeHtml(s.artist)}</span>` : ''}
+      <button type="button" class="music-sheet-btn" data-music-entry="${e.id}" data-music-song="${i}">🎼 악보·가사</button>
       ${s.link ? `<button type="button" class="listen-btn" data-url="${escapeHtml(s.link)}" data-title="${escapeHtml(s.title || '찬양')}" onclick="toggleSongPlayer(event)">▶ 듣기</button><div class="inline-player"></div>` : ''}
       ${s.best ? '<span class="cal-dot" title="연말 베스트"></span>' : ''}
     </li>`).join('');
@@ -1602,7 +1675,7 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
     if(entry){
       finalSongs = songs.map(s=>{
         const prev = (entry.songs || []).find(p=>p.title===s.title);
-        return prev ? { ...s, best: prev.best } : s;
+        return prev ? { ...s, best: prev.best, sheet: prev.sheet || null } : s;
       });
     }
   }
@@ -1622,6 +1695,125 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
   }
 });
  
+
+/* ---------- v10: 기타 악보 / 가사 ---------- */
+const MUSIC_KEYS = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+let activeMusicSong = null;
+let activeMusicKey = null;
+let lyricsFontSize = 20;
+
+const musicSheetOverlay = document.getElementById('musicSheetOverlay');
+const keySelect = document.getElementById('keySelect');
+keySelect.innerHTML = MUSIC_KEYS.map(k=>`<option value="${k}">${k}</option>`).join('');
+
+function normalizeKey(k){
+  const flats = {'Db':'C#','Eb':'D#','Gb':'F#','Ab':'G#','Bb':'A#'};
+  return flats[k] || k;
+}
+function transposeRoot(root, steps){
+  root = normalizeKey(root);
+  const idx = MUSIC_KEYS.indexOf(root);
+  if(idx < 0) return root;
+  return MUSIC_KEYS[(idx + steps + 120) % 12];
+}
+function transposeChord(chord, steps){
+  // C#m7, Bb, G/B, Fadd9 같은 일반 코드의 루트와 슬래시 베이스를 변환
+  return chord.replace(/^([A-G](?:#|b)?)([^/]*)(?:\/([A-G](?:#|b)?))?$/, (_,root,tail,bass)=>{
+    return transposeRoot(root,steps) + tail + (bass ? '/' + transposeRoot(bass,steps) : '');
+  });
+}
+function transposeChordText(text, steps){
+  if(!text || !steps) return text || '';
+  // [G], [Em7], [D/F#] 형식을 우선 지원
+  return text.replace(/\[([A-G](?:#|b)?(?:m|maj|min|dim|aug|sus|add)?\d*(?:\/[A-G](?:#|b)?)?)\]/g,
+    (_, chord)=>'[' + transposeChord(chord, steps) + ']');
+}
+function songSheet(song){
+  return song && song.sheet ? song.sheet : null;
+}
+function renderMusicSheet(){
+  const song = activeMusicSong;
+  if(!song) return;
+  const sheet = songSheet(song);
+  const guitar = document.getElementById('guitarContent');
+  const lyrics = document.getElementById('lyricsContent');
+  const originalKey = normalizeKey((sheet && sheet.key) || '');
+  const currentKey = activeMusicKey || originalKey || '';
+  document.getElementById('currentKey').textContent = currentKey || '-';
+  keySelect.value = currentKey || 'C';
+  keySelect.disabled = !originalKey;
+  document.getElementById('keyDown').disabled = !originalKey;
+  document.getElementById('keyUp').disabled = !originalKey;
+
+  if(!sheet || (!sheet.chords && !sheet.lyrics)){
+    const msg = `<div class="sheet-empty"><strong>악보·가사 데이터가 아직 없어요.</strong>
+      YouTube 링크는 등록되어 있습니다. 다음 단계에서 자동 검색 기능을 연결하면 이곳에 가사와 기타 코드가 표시됩니다.</div>`;
+    guitar.innerHTML = msg;
+    lyrics.innerHTML = msg;
+    document.getElementById('capoInfo').textContent = '';
+    return;
+  }
+
+  let steps = 0;
+  if(originalKey && currentKey){
+    steps = MUSIC_KEYS.indexOf(currentKey) - MUSIC_KEYS.indexOf(originalKey);
+  }
+  guitar.textContent = sheet.chords ? transposeChordText(sheet.chords, steps) : '기타 코드 데이터가 아직 없습니다.';
+  lyrics.textContent = sheet.lyrics || '가사 데이터가 아직 없습니다.';
+  document.getElementById('capoInfo').textContent = sheet.capo ? `Capo ${sheet.capo}` : '';
+}
+function openMusicSheet(entryId, songIndex){
+  const entry = entries.find(x=>x.id===entryId);
+  const song = entry && (entry.songs || [])[Number(songIndex)];
+  if(!song) return;
+  activeMusicSong = song;
+  const sheet = songSheet(song);
+  activeMusicKey = normalizeKey((sheet && sheet.key) || '') || null;
+  lyricsFontSize = 20;
+  document.getElementById('lyricsContent').style.fontSize = lyricsFontSize + 'px';
+  document.getElementById('musicSheetTitle').textContent = song.title || '악보·가사';
+  document.getElementById('musicSheetArtist').textContent = song.artist || '';
+  document.querySelectorAll('.music-tab').forEach((b,i)=>b.classList.toggle('active', i===0));
+  document.getElementById('guitarPane').style.display = '';
+  document.getElementById('lyricsPane').style.display = 'none';
+  renderMusicSheet();
+  musicSheetOverlay.classList.add('open');
+}
+document.addEventListener('click', e=>{
+  const btn = e.target.closest('[data-music-entry]');
+  if(btn){
+    e.preventDefault(); e.stopPropagation();
+    openMusicSheet(btn.dataset.musicEntry, btn.dataset.musicSong);
+  }
+});
+document.querySelectorAll('.music-tab').forEach(btn=>btn.addEventListener('click', ()=>{
+  document.querySelectorAll('.music-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const guitar = btn.dataset.musicTab === 'guitar';
+  document.getElementById('guitarPane').style.display = guitar ? '' : 'none';
+  document.getElementById('lyricsPane').style.display = guitar ? 'none' : '';
+}));
+document.getElementById('musicSheetClose').addEventListener('click', ()=>musicSheetOverlay.classList.remove('open'));
+musicSheetOverlay.addEventListener('click', e=>{ if(e.target===musicSheetOverlay) musicSheetOverlay.classList.remove('open'); });
+document.getElementById('keyDown').addEventListener('click', ()=>{
+  if(!activeMusicKey) return;
+  activeMusicKey = transposeRoot(activeMusicKey,-1); renderMusicSheet();
+});
+document.getElementById('keyUp').addEventListener('click', ()=>{
+  if(!activeMusicKey) return;
+  activeMusicKey = transposeRoot(activeMusicKey,1); renderMusicSheet();
+});
+keySelect.addEventListener('change', ()=>{ activeMusicKey = keySelect.value; renderMusicSheet(); });
+document.getElementById('lyricsSmaller').addEventListener('click', ()=>{
+  lyricsFontSize = Math.max(15, lyricsFontSize-2);
+  document.getElementById('lyricsContent').style.fontSize = lyricsFontSize+'px';
+});
+document.getElementById('lyricsLarger').addEventListener('click', ()=>{
+  lyricsFontSize = Math.min(34, lyricsFontSize+2);
+  document.getElementById('lyricsContent').style.fontSize = lyricsFontSize+'px';
+});
+
+
 /* ---------- 실시간 동기화 시작 ---------- */
 entriesRef.on('value', (snapshot)=>{
   const val = snapshot.val() || {};
@@ -1645,6 +1837,7 @@ scoresRef.on('value', (snapshot)=>{
 </script>
 
 <script>
+
 /* v5 — YouTube URL을 페이지 내부 플레이어로 변환 */
 function getYouTubeVideoId(url){
   try{
@@ -1691,7 +1884,7 @@ function toggleSongPlayer(event){
   holder.classList.add('open');
   btn.textContent = '▲ 닫기';
 }
-</script>
 
+</script>
 </body>
 </html>
