@@ -969,7 +969,7 @@ root{
     </div>
     <div class="music-auto-box">
       <div class="music-auto-row">
-        <span class="music-auto-status" id="musicAutoStatus">가사 정보를 확인할 준비가 됐어요.</span>
+        <span class="music-auto-status" id="musicAutoStatus">무료 가사 소스 2곳을 순서대로 확인할 준비가 됐어요.</span>
         <button type="button" class="music-auto-btn" id="musicAutoSearch">🔎 자동으로 찾기</button>
         <button type="button" class="music-auto-btn" id="musicApiToggle">⚙️ YouTube API</button>
       </div>
@@ -1756,7 +1756,20 @@ function cleanYoutubeTitle(title){
   return String(title || '')
     .replace(/\[[^\]]*(official|lyrics?|lyric|audio|mv|music video|live|가사|찬양)[^\]]*\]/ig,' ')
     .replace(/\([^)]*(official|lyrics?|lyric|audio|mv|music video|live|가사|찬양)[^)]*\)/ig,' ')
+    .split('|')[0]
     .replace(/\s+/g,' ').trim();
+}
+function lyricSearchTitles(song, meta){
+  const values = [
+    song?.title || '',
+    meta?.title ? cleanYoutubeTitle(meta.title) : '',
+    meta?.title ? String(meta.title).split('|')[0].trim() : ''
+  ].filter(Boolean);
+  return [...new Set(values.map(v=>v.trim()).filter(Boolean))];
+}
+function lyricSearchArtists(song, meta){
+  const values = [song?.artist || '', meta?.channel || ''].filter(Boolean);
+  return [...new Set(values.map(v=>v.trim()).filter(Boolean))];
 }
 async function fetchYoutubeMeta(song){
   const key = getStoredYoutubeKey();
@@ -1807,6 +1820,56 @@ async function searchLrclib(title, artist){
   });
   return rows.find(x=>x.plainLyrics) || rows[0] || null;
 }
+
+async function searchLyricsOvh(artist, title){
+  if(!artist || !title) return null;
+  const url = `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`;
+  const r = await fetch(url);
+  if(r.status === 404) return null;
+  if(!r.ok) return null;
+  const data = await r.json();
+  const lyrics = String(data?.lyrics || '').trim();
+  if(!lyrics) return null;
+  return {
+    plainLyrics: lyrics,
+    trackName: title,
+    artistName: artist,
+    sourceName: 'Lyrics.ovh'
+  };
+}
+async function searchAllFreeLyrics(song, meta, onProgress){
+  const titles = lyricSearchTitles(song, meta);
+  const artists = lyricSearchArtists(song, meta);
+
+  // 1) LRCLIB: try title+artist combinations, then title only.
+  for(const title of titles){
+    for(const artist of artists){
+      onProgress?.(`LRCLIB에서 “${title}” 검색 중…`);
+      try{
+        const r = await searchLrclib(title, artist);
+        if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
+      }catch(e){}
+    }
+    onProgress?.(`LRCLIB에서 “${title}” 제목만으로 다시 검색 중…`);
+    try{
+      const r = await searchLrclib(title, '');
+      if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
+    }catch(e){}
+  }
+
+  // 2) Lyrics.ovh: strict artist/title matching, so try all known combinations.
+  for(const title of titles){
+    for(const artist of artists){
+      onProgress?.(`Lyrics.ovh에서 “${artist} - ${title}” 검색 중…`);
+      try{
+        const r = await searchLyricsOvh(artist, title);
+        if(r?.plainLyrics) return r;
+      }catch(e){}
+    }
+  }
+  return null;
+}
+
 async function saveAutoLyricsToFirebase(song, lyricsResult, meta){
   if(!activeMusicEntryId || activeMusicSongIndex == null || !lyricsResult?.plainLyrics) return;
   const entry = entries.find(x=>x.id===activeMusicEntryId);
@@ -1821,7 +1884,7 @@ async function saveAutoLyricsToFirebase(song, lyricsResult, meta){
     sheet: {
       ...(current.sheet || {}),
       lyrics: lyricsResult.plainLyrics,
-      lyricsSource: 'LRCLIB',
+      lyricsSource: lyricsResult.sourceName || 'LRCLIB',
       lyricsTrack: lyricsResult.trackName || lyricsResult.name || '',
       lyricsArtist: lyricsResult.artistName || '',
       youtubeTitle: meta?.title || current.sheet?.youtubeTitle || '',
@@ -1847,26 +1910,22 @@ async function autoFindMusicData(){
       status.textContent = `YouTube 정보 확인 실패: ${e.message} — 등록된 곡 제목으로 가사를 찾아볼게요.`;
     }
 
-    let title = (activeMusicSong.title || '').trim();
-    let artist = (activeMusicSong.artist || '').trim();
-    if(!title && meta?.title) title = cleanYoutubeTitle(meta.title);
-    if(!artist && meta?.channel) artist = meta.channel;
+    const titles = lyricSearchTitles(activeMusicSong, meta);
+    if(!titles.length) throw new Error('검색할 곡 제목이 없어요.');
 
-    if(!title) throw new Error('검색할 곡 제목이 없어요.');
-    status.textContent = `“${title}” 가사를 무료 데이터베이스에서 찾는 중…`;
-    let result = await searchLrclib(title, artist);
-
-    // If artist made the Korean CCM search too strict, retry title-only.
-    if(!result && artist) result = await searchLrclib(title, '');
+    const result = await searchAllFreeLyrics(activeMusicSong, meta, msg => {
+      status.textContent = msg;
+    });
 
     if(!result || !result.plainLyrics){
-      status.textContent = '가사를 찾지 못했어요. 영상 재생은 그대로 사용할 수 있어요.';
+      status.textContent = '무료 가사 소스 2곳에서 찾지 못했어요. 다음 단계의 AI 가사 인식 대상으로 표시합니다.';
       source.textContent = meta ? `YouTube: ${meta.title}` : '';
       return;
     }
 
     status.textContent = '가사를 찾았어요. Firebase에 저장했습니다.';
-    source.textContent = `가사 출처: LRCLIB · 검색 결과: ${result.trackName || result.name || title}${result.artistName ? ' — '+result.artistName : ''}`;
+    const foundTitle = result.trackName || result.name || titles[0];
+    source.textContent = `가사 출처: ${result.sourceName || '무료 가사 DB'} · 검색 결과: ${foundTitle}${result.artistName ? ' — '+result.artistName : ''}`;
     await saveAutoLyricsToFirebase(activeMusicSong, result, meta);
     renderMusicSheet();
     // Switch to lyrics tab so the result is immediately visible.
@@ -1981,7 +2040,7 @@ function openMusicSheet(entryId, songIndex){
   document.getElementById('musicSheetArtist').textContent = song.artist || '';
   const savedSheet = songSheet(song);
   document.getElementById('musicAutoStatus').textContent =
-    savedSheet?.lyrics ? '저장된 가사가 있어요. 필요하면 다시 자동 검색할 수 있습니다.' : '가사 정보를 확인할 준비가 됐어요.';
+    savedSheet?.lyrics ? '저장된 가사가 있어요. 필요하면 다시 자동 검색할 수 있습니다.' : '무료 가사 소스 2곳을 순서대로 확인할 준비가 됐어요.';
   document.getElementById('musicSourceInfo').textContent =
     savedSheet?.lyricsSource ? `가사 출처: ${savedSheet.lyricsSource}${savedSheet.lyricsTrack ? ' · '+savedSheet.lyricsTrack : ''}` : '';
   document.querySelectorAll('.music-tab').forEach((b,i)=>b.classList.toggle('active', i===0));
