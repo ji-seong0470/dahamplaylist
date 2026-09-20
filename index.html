@@ -834,15 +834,6 @@ root{
   }
   .music-source{margin-top:7px;color:var(--ink-soft);font-size:12px;}
 
-
-  /* v13 — AI 가사 인식 준비/업로드 UI */
-  .ai-lyrics-box{
-    margin-top:10px;padding:12px;border:1px dashed #777770;border-radius:10px;background:#fff;
-  }
-  .ai-lyrics-title{font-weight:800;margin-bottom:6px;}
-  .ai-lyrics-help{font-size:12px;color:var(--ink-soft);line-height:1.55;margin-bottom:8px;}
-  .ai-file-name{font-size:12px;color:var(--ink-soft);margin-top:6px;word-break:break-all;}
-
 </style>
 </head>
 <body>
@@ -978,26 +969,13 @@ root{
     </div>
     <div class="music-auto-box">
       <div class="music-auto-row">
-        <span class="music-auto-status" id="musicAutoStatus">무료 가사 소스 2곳을 순서대로 확인할 준비가 됐어요.</span>
+        <span class="music-auto-status" id="musicAutoStatus">YouTube 링크만으로 가사를 여러 방식으로 찾아볼 준비가 됐어요.</span>
         <button type="button" class="music-auto-btn" id="musicAutoSearch">🔎 자동으로 찾기</button>
         <button type="button" class="music-auto-btn" id="musicApiToggle">⚙️ YouTube API</button>
       </div>
       <div class="api-key-box" id="musicApiBox" style="display:none;">
         <input type="password" id="youtubeApiKeyInput" autocomplete="off" placeholder="YouTube Data API 키 입력">
         <button type="button" class="music-auto-btn" id="youtubeApiSave">저장</button>
-      </div>
-      <div class="ai-lyrics-box" id="aiLyricsBox">
-        <div class="ai-lyrics-title">✨ AI 가사 인식</div>
-        <div class="ai-lyrics-help">
-          무료 가사 검색에 실패하면, 직접 가지고 있는 음원/녹음 파일을 선택해 가사 인식 단계로 넘길 수 있어요.
-          YouTube 영상의 음원을 홈페이지가 임의로 내려받지는 않습니다.
-        </div>
-        <div class="music-auto-row">
-          <input type="file" id="aiAudioFile" accept="audio/*,.mp3,.m4a,.wav,.webm,.mp4" style="display:none;">
-          <button type="button" class="music-auto-btn" id="aiAudioPick">🎵 음원 선택</button>
-          <button type="button" class="music-auto-btn" id="aiLyricsStart" disabled>✨ AI 가사 인식</button>
-        </div>
-        <div class="ai-file-name" id="aiAudioFileName">선택된 파일 없음</div>
       </div>
       <div class="music-source" id="musicSourceInfo"></div>
     </div>
@@ -1751,49 +1729,6 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
  
 
 
-
-/* ---------- v13: AI 가사 인식 안전 연결 준비 ---------- */
-let selectedAiAudioFile = null;
-
-function resetAiLyricsUi(){
-  selectedAiAudioFile = null;
-  const input = document.getElementById('aiAudioFile');
-  if(input) input.value = '';
-  const name = document.getElementById('aiAudioFileName');
-  if(name) name.textContent = '선택된 파일 없음';
-  const start = document.getElementById('aiLyricsStart');
-  if(start) start.disabled = true;
-}
-
-document.getElementById('aiAudioPick').addEventListener('click', ()=>{
-  document.getElementById('aiAudioFile').click();
-});
-
-document.getElementById('aiAudioFile').addEventListener('change', (e)=>{
-  selectedAiAudioFile = e.target.files && e.target.files[0] ? e.target.files[0] : null;
-  const name = document.getElementById('aiAudioFileName');
-  const start = document.getElementById('aiLyricsStart');
-  if(!selectedAiAudioFile){
-    name.textContent = '선택된 파일 없음';
-    start.disabled = true;
-    return;
-  }
-  const mb = selectedAiAudioFile.size / 1024 / 1024;
-  name.textContent = `${selectedAiAudioFile.name} · ${mb.toFixed(1)} MB`;
-  start.disabled = false;
-});
-
-document.getElementById('aiLyricsStart').addEventListener('click', ()=>{
-  const status = document.getElementById('musicAutoStatus');
-  if(!selectedAiAudioFile){
-    status.textContent = '먼저 음원 파일을 선택해 주세요.';
-    return;
-  }
-  status.textContent = 'AI 연결 준비 완료. 다음 단계에서 안전한 전사 서버를 연결하면 이 파일을 바로 가사로 변환할 수 있어요.';
-  document.getElementById('musicSourceInfo').textContent =
-    'OpenAI API 키를 공개 GitHub Pages 코드에 넣지 않도록, AI 호출은 서버를 거치게 만들 예정입니다.';
-});
-
 /* ---------- v11: YouTube 메타데이터 + LRCLIB 무료 가사 검색 ---------- */
 const YT_KEY_STORAGE = 'daham_youtube_api_key_v1';
 
@@ -1851,9 +1786,14 @@ async function fetchYoutubeMeta(song){
   const data = await r.json();
   const item = data.items && data.items[0];
   if(!item) throw new Error('YouTube 영상 정보를 찾지 못했어요.');
+  const iso = item.contentDetails?.duration || '';
+  const dm = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  const duration = dm ? ((Number(dm[1]||0)*3600)+(Number(dm[2]||0)*60)+Number(dm[3]||0)) : 0;
   return {
     title: item.snippet?.title || '',
     channel: item.snippet?.channelTitle || '',
+    description: item.snippet?.description || '',
+    duration,
     videoId: id
   };
 }
@@ -1886,6 +1826,65 @@ async function searchLrclib(title, artist){
   return rows.find(x=>x.plainLyrics) || rows[0] || null;
 }
 
+
+function compactSongTitleVariants(song, meta){
+  const raw = [
+    song?.title || '',
+    meta?.title || '',
+    cleanYoutubeTitle(meta?.title || '')
+  ].filter(Boolean);
+
+  const noise = /(official|music\s*video|lyrics?|audio|live|mv|찬양|가사|예배|worship|청춘찬양단|cover|커버)/ig;
+  const vals = [];
+  for(const r of raw){
+    vals.push(r);
+    vals.push(String(r).split('|')[0]);
+    vals.push(String(r).split('｜')[0]);
+    vals.push(String(r).replace(/\[[^\]]*\]/g,' ').replace(/\([^)]*\)/g,' '));
+    vals.push(String(r).replace(noise,' '));
+  }
+  return [...new Set(vals.map(v=>String(v).replace(/\s+/g,' ').trim()).filter(v=>v.length>=2))];
+}
+
+async function searchLrclibQ(q){
+  const r = await fetch(`https://lrclib.net/api/search?q=${encodeURIComponent(q)}`, {
+    headers: {'Lrclib-Client':'DahamPlaylist v14 (https://ji-seong0470.github.io/dahamplaylist/)'}
+  });
+  if(r.status === 429) throw new Error('LRCLIB 요청이 많아요. 잠시 후 다시 시도해 주세요.');
+  if(!r.ok) return [];
+  const rows = await r.json();
+  return Array.isArray(rows) ? rows : [];
+}
+
+async function getLrclibExact(title, artist, duration){
+  if(!title || !artist) return null;
+  const p = new URLSearchParams({track_name:title, artist_name:artist});
+  if(duration) p.set('duration', String(Math.round(duration)));
+  const r = await fetch(`https://lrclib.net/api/get?${p.toString()}`, {
+    headers: {'Lrclib-Client':'DahamPlaylist v14 (https://ji-seong0470.github.io/dahamplaylist/)'}
+  });
+  if(!r.ok) return null;
+  const row = await r.json();
+  return row?.plainLyrics ? {...row, sourceName:'LRCLIB exact'} : null;
+}
+
+function chooseLrclibResult(rows, titles){
+  if(!Array.isArray(rows) || !rows.length) return null;
+  const norm = s => String(s||'').toLowerCase()
+    .replace(/[\s\-_.()[\]{}'"`~!@#$%^&*+=,?<>:;|\\/]/g,'');
+  const targets = titles.map(norm).filter(Boolean);
+  const scored = rows.filter(x=>x?.plainLyrics).map(x=>{
+    const n = norm(x.trackName || x.name);
+    let score = 0;
+    for(const t of targets){
+      if(n === t) score = Math.max(score, 100);
+      else if(n.includes(t) || t.includes(n)) score = Math.max(score, 65);
+    }
+    return {x,score};
+  }).sort((a,b)=>b.score-a.score);
+  return scored[0]?.score >= 65 ? {...scored[0].x, sourceName:'LRCLIB'} : null;
+}
+
 async function searchLyricsOvh(artist, title){
   if(!artist || !title) return null;
   const url = `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`;
@@ -1903,29 +1902,50 @@ async function searchLyricsOvh(artist, title){
   };
 }
 async function searchAllFreeLyrics(song, meta, onProgress){
-  const titles = lyricSearchTitles(song, meta);
+  const titles = compactSongTitleVariants(song, meta);
   const artists = lyricSearchArtists(song, meta);
+  const duration = meta?.duration || 0;
 
-  // 1) LRCLIB: try title+artist combinations, then title only.
+  // 1) LRCLIB exact endpoint. Duration can improve matching.
+  for(const title of titles.slice(0,5)){
+    for(const artist of artists){
+      onProgress?.(`정확 검색: “${title}” / ${artist}`);
+      try{
+        const exact = await getLrclibExact(title, artist, duration);
+        if(exact) return exact;
+      }catch(e){}
+    }
+  }
+
+  // 2) LRCLIB structured title search.
   for(const title of titles){
     for(const artist of artists){
-      onProgress?.(`LRCLIB에서 “${title}” 검색 중…`);
+      onProgress?.(`LRCLIB 제목+아티스트 검색: “${title}”`);
       try{
         const r = await searchLrclib(title, artist);
         if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
       }catch(e){}
     }
-    onProgress?.(`LRCLIB에서 “${title}” 제목만으로 다시 검색 중…`);
     try{
       const r = await searchLrclib(title, '');
       if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
     }catch(e){}
   }
 
-  // 2) Lyrics.ovh: strict artist/title matching, so try all known combinations.
+  // 3) LRCLIB broad q search catches alternate metadata/spellings.
   for(const title of titles){
+    onProgress?.(`LRCLIB 확장 검색: “${title}”`);
+    try{
+      const rows = await searchLrclibQ(title);
+      const r = chooseLrclibResult(rows, titles);
+      if(r) return r;
+    }catch(e){}
+  }
+
+  // 4) Lyrics.ovh fallback where artist/title are known.
+  for(const title of titles.slice(0,6)){
     for(const artist of artists){
-      onProgress?.(`Lyrics.ovh에서 “${artist} - ${title}” 검색 중…`);
+      onProgress?.(`Lyrics.ovh 검색: “${artist} - ${title}”`);
       try{
         const r = await searchLyricsOvh(artist, title);
         if(r?.plainLyrics) return r;
@@ -1934,7 +1954,6 @@ async function searchAllFreeLyrics(song, meta, onProgress){
   }
   return null;
 }
-
 async function saveAutoLyricsToFirebase(song, lyricsResult, meta){
   if(!activeMusicEntryId || activeMusicSongIndex == null || !lyricsResult?.plainLyrics) return;
   const entry = entries.find(x=>x.id===activeMusicEntryId);
@@ -1983,7 +2002,7 @@ async function autoFindMusicData(){
     });
 
     if(!result || !result.plainLyrics){
-      status.textContent = '무료 가사 소스 2곳에서 찾지 못했어요. 아래 ✨ AI 가사 인식에서 음원 파일을 선택할 수 있어요.';
+      status.textContent = '확장 검색에서도 가사를 찾지 못했어요. 영상 재생은 그대로 사용할 수 있어요.';
       source.textContent = meta ? `YouTube: ${meta.title}` : '';
       return;
     }
@@ -2105,7 +2124,7 @@ function openMusicSheet(entryId, songIndex){
   document.getElementById('musicSheetArtist').textContent = song.artist || '';
   const savedSheet = songSheet(song);
   document.getElementById('musicAutoStatus').textContent =
-    savedSheet?.lyrics ? '저장된 가사가 있어요. 필요하면 다시 자동 검색할 수 있습니다.' : '무료 가사 소스 2곳을 순서대로 확인할 준비가 됐어요.';
+    savedSheet?.lyrics ? '저장된 가사가 있어요. 필요하면 다시 자동 검색할 수 있습니다.' : 'YouTube 링크만으로 가사를 여러 방식으로 찾아볼 준비가 됐어요.';
   document.getElementById('musicSourceInfo').textContent =
     savedSheet?.lyricsSource ? `가사 출처: ${savedSheet.lyricsSource}${savedSheet.lyricsTrack ? ' · '+savedSheet.lyricsTrack : ''}` : '';
   document.querySelectorAll('.music-tab').forEach((b,i)=>b.classList.toggle('active', i===0));
