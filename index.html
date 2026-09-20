@@ -847,6 +847,11 @@ root{
   .local-ai-help,.local-ai-file{font-size:12px;color:var(--ink-soft);line-height:1.55}
   .local-ai-file{margin-top:7px;word-break:break-all}
 
+
+  /* v17 — 고정확도 전사 + 확인 후 저장 */
+  .ai-preview{display:none;margin-top:10px;padding:12px;border:1px solid #777770;border-radius:10px;background:#fafafa}
+  .ai-preview textarea{width:100%;min-height:220px;box-sizing:border-box;padding:12px;border:1px solid #777770;border-radius:8px;font:inherit;line-height:1.7;background:#fff;color:#111}
+  .ai-preview-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 </style>
 </head>
 <body>
@@ -992,13 +997,21 @@ root{
       </div>
       <div class="local-ai-box">
         <div class="local-ai-title">✨ 무료 AI 가사 인식 (브라우저)</div>
-        <div class="local-ai-help">무료 검색에 없는 곡은 음원/녹음 파일을 선택하면 이 컴퓨터에서 Whisper로 전사합니다. API 요금과 서버 요금은 없습니다. 최초 실행 때 AI 모델을 다운로드합니다.</div>
+        <div class="local-ai-help">무료 검색에 없는 곡은 음원/녹음 파일을 선택하면 이 컴퓨터에서 더 정확한 Whisper Small 모델로 전사합니다. API 요금과 서버 요금은 없습니다. 결과는 확인 후에만 저장됩니다.</div>
         <div class="music-auto-row" style="margin-top:8px">
           <input id="localAiAudio" type="file" accept="audio/*,.mp3,.wav,.m4a,.webm,.mp4" style="display:none">
           <button type="button" class="music-auto-btn" id="localAiPick">🎵 음원 선택</button>
           <button type="button" class="music-auto-btn" id="localAiStart" disabled>✨ 무료 AI 전사</button>
         </div>
         <div class="local-ai-file" id="localAiFileName">선택된 파일 없음</div>
+        <div class="ai-preview" id="localAiPreview">
+          <div style="font-weight:800;margin-bottom:7px">AI 전사 미리보기 — 틀린 부분은 직접 고칠 수 있어요.</div>
+          <textarea id="localAiPreviewText" spellcheck="false"></textarea>
+          <div class="ai-preview-actions">
+            <button type="button" class="music-auto-btn" id="localAiSave">💾 이 가사 저장</button>
+            <button type="button" class="music-auto-btn" id="localAiDiscard">취소</button>
+          </div>
+        </div>
       </div>
       <div class="music-source" id="musicSourceInfo"></div>
     </div>
@@ -1756,16 +1769,31 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
 /* ---------- v16: Transformers.js + Whisper 브라우저 전사 ---------- */
 let localAiFile = null;
 let localWhisper = null;
+let pendingLocalAiLyrics = '';
+
+function looksLikeBadSongTranscript(text){
+  const cleaned=String(text||'').replace(/[.,!?~…\n\r]/g,' ').replace(/\s+/g,' ').trim();
+  if(cleaned.length<20) return true;
+  const words=cleaned.split(' ').filter(Boolean);
+  if(words.length<5) return true;
+  const counts={};
+  for(const w of words) counts[w]=(counts[w]||0)+1;
+  const maxRepeat=Math.max(...Object.values(counts));
+  if(words.length>=12 && maxRepeat/words.length>0.42) return true;
+  if(/(?:네[ ,.]*){8,}|(?:예[ ,.]*){8,}|(?:아[ ,.]*){10,}/.test(text)) return true;
+  if((text.match(/�/g)||[]).length>=2) return true;
+  return false;
+}
 
 async function getLocalWhisper(){
   if(localWhisper) return localWhisper;
   const status = document.getElementById('musicAutoStatus');
-  status.textContent = '무료 Whisper 모델을 처음 다운로드하는 중… 처음 한 번은 시간이 걸릴 수 있어요.';
+  status.textContent = '고정확도 Whisper Small 모델을 처음 다운로드하는 중… 처음 한 번은 시간이 더 걸릴 수 있어요.';
   const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.2');
   const device = navigator.gpu ? 'webgpu' : 'wasm';
   localWhisper = await mod.pipeline(
     'automatic-speech-recognition',
-    'onnx-community/whisper-tiny',
+    'onnx-community/whisper-small',
     { device, dtype: device === 'webgpu' ? 'fp16' : 'q8' }
   );
   return localWhisper;
@@ -1829,24 +1857,52 @@ document.getElementById('localAiStart').addEventListener('click', async()=>{
     const result = await transcriber(audio, {
       language:'ko',
       task:'transcribe',
-      chunk_length_s:30,
-      stride_length_s:5,
-      return_timestamps:false
+      chunk_length_s:25,
+      stride_length_s:6,
+      return_timestamps:false,
+      condition_on_prev_tokens:false
     });
     const text = String(result?.text || '').trim();
     if(!text) throw new Error('전사 결과가 비어 있어요.');
-    await saveLocalAiLyrics(text);
-    status.textContent = '무료 AI 전사가 끝났어요. 가사를 Firebase에 저장했습니다.';
-    document.getElementById('musicSourceInfo').textContent = '가사 출처: 이 브라우저에서 실행한 Whisper AI 전사';
-    renderMusicSheet();
-    document.querySelectorAll('.music-tab').forEach(b=>b.classList.toggle('active',b.dataset.musicTab==='lyrics'));
-    document.getElementById('guitarPane').style.display='none';
-    document.getElementById('lyricsPane').style.display='';
+    pendingLocalAiLyrics = text;
+    document.getElementById('localAiPreviewText').value = text;
+    document.getElementById('localAiPreview').style.display = 'block';
+    if(looksLikeBadSongTranscript(text)){
+      status.textContent = '반복 단어가 많은 비정상 전사로 판단했어요. 자동 저장하지 않았습니다.';
+      document.getElementById('musicSourceInfo').textContent = 'AI 결과를 아래에서 확인하거나 다시 전사해 주세요.';
+    }else{
+      status.textContent = 'AI 전사가 끝났어요. 아직 저장하지 않았습니다. 미리보기를 확인해 주세요.';
+      document.getElementById('musicSourceInfo').textContent = '가사 출처 후보: 브라우저 Whisper Small AI 전사';
+    }
   }catch(e){
     status.textContent = `무료 AI 전사 실패: ${e.message || e}`;
   }finally{
     btn.disabled = !localAiFile;
   }
+});
+
+
+document.getElementById('localAiSave').addEventListener('click', async()=>{
+  const status=document.getElementById('musicAutoStatus');
+  const edited=document.getElementById('localAiPreviewText').value.trim();
+  if(!edited){status.textContent='저장할 가사가 비어 있어요.';return;}
+  try{
+    await saveLocalAiLyrics(edited);
+    pendingLocalAiLyrics='';
+    document.getElementById('localAiPreview').style.display='none';
+    status.textContent='확인한 가사를 Firebase에 저장했어요.';
+    document.getElementById('musicSourceInfo').textContent='가사 출처: 브라우저 Whisper AI 전사 · 사용자 확인';
+    renderMusicSheet();
+    document.querySelectorAll('.music-tab').forEach(b=>b.classList.toggle('active',b.dataset.musicTab==='lyrics'));
+    document.getElementById('guitarPane').style.display='none';
+    document.getElementById('lyricsPane').style.display='';
+  }catch(e){status.textContent=`가사 저장 실패: ${e.message||e}`;}
+});
+document.getElementById('localAiDiscard').addEventListener('click',()=>{
+  pendingLocalAiLyrics='';
+  document.getElementById('localAiPreviewText').value='';
+  document.getElementById('localAiPreview').style.display='none';
+  document.getElementById('musicAutoStatus').textContent='AI 전사 결과를 취소했어요. 다시 전사할 수 있습니다.';
 });
 
 /* ---------- v11: YouTube 메타데이터 + LRCLIB 무료 가사 검색 ---------- */
