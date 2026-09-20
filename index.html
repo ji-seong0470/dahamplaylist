@@ -834,6 +834,19 @@ root{
   }
   .music-source{margin-top:7px;color:var(--ink-soft);font-size:12px;}
 
+
+  /* v15 — 선택(드래그) 가독성 수정 */
+  ::selection { background:#D9E8FF; color:#111 !important; }
+  ::-moz-selection { background:#D9E8FF; color:#111 !important; }
+  input::selection, textarea::selection { background:#D9E8FF; color:#111 !important; }
+
+
+  /* v16 — 브라우저 무료 Whisper 전사 */
+  .local-ai-box{margin-top:10px;padding:12px;border:1px dashed #777770;border-radius:10px;background:#fff}
+  .local-ai-title{font-weight:800;margin-bottom:5px}
+  .local-ai-help,.local-ai-file{font-size:12px;color:var(--ink-soft);line-height:1.55}
+  .local-ai-file{margin-top:7px;word-break:break-all}
+
 </style>
 </head>
 <body>
@@ -976,6 +989,16 @@ root{
       <div class="api-key-box" id="musicApiBox" style="display:none;">
         <input type="password" id="youtubeApiKeyInput" autocomplete="off" placeholder="YouTube Data API 키 입력">
         <button type="button" class="music-auto-btn" id="youtubeApiSave">저장</button>
+      </div>
+      <div class="local-ai-box">
+        <div class="local-ai-title">✨ 무료 AI 가사 인식 (브라우저)</div>
+        <div class="local-ai-help">무료 검색에 없는 곡은 음원/녹음 파일을 선택하면 이 컴퓨터에서 Whisper로 전사합니다. API 요금과 서버 요금은 없습니다. 최초 실행 때 AI 모델을 다운로드합니다.</div>
+        <div class="music-auto-row" style="margin-top:8px">
+          <input id="localAiAudio" type="file" accept="audio/*,.mp3,.wav,.m4a,.webm,.mp4" style="display:none">
+          <button type="button" class="music-auto-btn" id="localAiPick">🎵 음원 선택</button>
+          <button type="button" class="music-auto-btn" id="localAiStart" disabled>✨ 무료 AI 전사</button>
+        </div>
+        <div class="local-ai-file" id="localAiFileName">선택된 파일 없음</div>
       </div>
       <div class="music-source" id="musicSourceInfo"></div>
     </div>
@@ -1729,6 +1752,103 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
  
 
 
+
+/* ---------- v16: Transformers.js + Whisper 브라우저 전사 ---------- */
+let localAiFile = null;
+let localWhisper = null;
+
+async function getLocalWhisper(){
+  if(localWhisper) return localWhisper;
+  const status = document.getElementById('musicAutoStatus');
+  status.textContent = '무료 Whisper 모델을 처음 다운로드하는 중… 처음 한 번은 시간이 걸릴 수 있어요.';
+  const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.2');
+  const device = navigator.gpu ? 'webgpu' : 'wasm';
+  localWhisper = await mod.pipeline(
+    'automatic-speech-recognition',
+    'onnx-community/whisper-tiny',
+    { device, dtype: device === 'webgpu' ? 'fp16' : 'q8' }
+  );
+  return localWhisper;
+}
+
+async function decodeAudioForWhisper(file){
+  const buf = await file.arrayBuffer();
+  const AC = window.AudioContext || window.webkitAudioContext;
+  const ctx = new AC({sampleRate:16000});
+  const decoded = await ctx.decodeAudioData(buf.slice(0));
+  const offline = new OfflineAudioContext(1, Math.ceil(decoded.duration*16000), 16000);
+  const source = offline.createBufferSource();
+  source.buffer = decoded;
+  source.connect(offline.destination);
+  source.start();
+  const rendered = await offline.startRendering();
+  const mono = rendered.getChannelData(0).slice();
+  try{ await ctx.close(); }catch(e){}
+  return mono;
+}
+
+async function saveLocalAiLyrics(text){
+  if(!activeMusicEntryId || activeMusicSongIndex == null || !text) return;
+  const entry = entries.find(x=>x.id===activeMusicEntryId);
+  if(!entry) return;
+  const songs = [...(entry.songs || [])];
+  const idx = Number(activeMusicSongIndex);
+  const current = songs[idx];
+  if(!current) return;
+  songs[idx] = {
+    ...current,
+    sheet:{
+      ...(current.sheet || {}),
+      lyrics:text.trim(),
+      lyricsSource:'Local Whisper AI'
+    }
+  };
+  await entriesRef.child(activeMusicEntryId).update({songs});
+  activeMusicSong = songs[idx];
+}
+
+document.getElementById('localAiPick').addEventListener('click',()=>{
+  document.getElementById('localAiAudio').click();
+});
+document.getElementById('localAiAudio').addEventListener('change',(e)=>{
+  localAiFile = e.target.files?.[0] || null;
+  document.getElementById('localAiFileName').textContent = localAiFile
+    ? `${localAiFile.name} · ${(localAiFile.size/1024/1024).toFixed(1)} MB`
+    : '선택된 파일 없음';
+  document.getElementById('localAiStart').disabled = !localAiFile;
+});
+document.getElementById('localAiStart').addEventListener('click', async()=>{
+  const status = document.getElementById('musicAutoStatus');
+  const btn = document.getElementById('localAiStart');
+  if(!localAiFile) return;
+  btn.disabled = true;
+  try{
+    const transcriber = await getLocalWhisper();
+    status.textContent = '음원을 읽고 한국어 가사를 AI로 전사하는 중…';
+    const audio = await decodeAudioForWhisper(localAiFile);
+    const result = await transcriber(audio, {
+      language:'ko',
+      task:'transcribe',
+      chunk_length_s:30,
+      stride_length_s:5,
+      return_timestamps:false
+    });
+    const text = String(result?.text || '').trim();
+    if(!text) throw new Error('전사 결과가 비어 있어요.');
+    await saveLocalAiLyrics(text);
+    status.textContent = '무료 AI 전사가 끝났어요. 가사를 Firebase에 저장했습니다.';
+    document.getElementById('musicSourceInfo').textContent = '가사 출처: 이 브라우저에서 실행한 Whisper AI 전사';
+    renderMusicSheet();
+    document.querySelectorAll('.music-tab').forEach(b=>b.classList.toggle('active',b.dataset.musicTab==='lyrics'));
+    document.getElementById('guitarPane').style.display='none';
+    document.getElementById('lyricsPane').style.display='';
+  }catch(e){
+    status.textContent = `무료 AI 전사 실패: ${e.message || e}`;
+  }finally{
+    btn.disabled = !localAiFile;
+  }
+});
+
 /* ---------- v11: YouTube 메타데이터 + LRCLIB 무료 가사 검색 ---------- */
 const YT_KEY_STORAGE = 'daham_youtube_api_key_v1';
 
@@ -1901,51 +2021,76 @@ async function searchLyricsOvh(artist, title){
     sourceName: 'Lyrics.ovh'
   };
 }
-async function searchAllFreeLyrics(song, meta, onProgress){
-  const titles = compactSongTitleVariants(song, meta);
-  const artists = lyricSearchArtists(song, meta);
-  const duration = meta?.duration || 0;
 
-  // 1) LRCLIB exact endpoint. Duration can improve matching.
-  for(const title of titles.slice(0,5)){
-    for(const artist of artists){
-      onProgress?.(`정확 검색: “${title}” / ${artist}`);
-      try{
-        const exact = await getLrclibExact(title, artist, duration);
-        if(exact) return exact;
-      }catch(e){}
-    }
+function extractYoutubeArtistCandidates(meta){
+  const vals = [];
+  const title = String(meta?.title || '');
+  const desc = String(meta?.description || '');
+  const channel = String(meta?.channel || '');
+  if(channel) vals.push(channel);
+
+  // Common YouTube title separators: "곡명 | 아티스트", "곡명 - 아티스트"
+  for(const sep of ['|','｜']){
+    const parts = title.split(sep).map(s=>s.trim()).filter(Boolean);
+    if(parts.length > 1) vals.push(...parts.slice(1));
   }
 
-  // 2) LRCLIB structured title search.
+  // Bracketed performer/channel labels are useful for Korean worship uploads.
+  const brackets = [...title.matchAll(/\[([^\]]{2,40})\]/g)].map(m=>m[1]);
+  vals.push(...brackets);
+
+  // Common description labels, without trying to reproduce description text.
+  for(const line of desc.split(/\r?\n/).slice(0,30)){
+    const m = line.match(/(?:artist|아티스트|노래|찬양|singer|worship)\s*[:：]\s*(.{2,60})/i);
+    if(m) vals.push(m[1].trim());
+  }
+  return [...new Set(vals.map(v=>v.replace(/\[[^\]]*\]/g,'').trim()).filter(v=>v.length>=2 && v.length<=60))];
+}
+
+async function sleepV15(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+async function searchAllFreeLyrics(song, meta, onProgress){
+  const titles = compactSongTitleVariants(song, meta);
+  const artists = [...new Set([...lyricSearchArtists(song, meta), ...extractYoutubeArtistCandidates(meta)])];
+
+  // 1) Structured LRCLIB searches.
   for(const title of titles){
-    for(const artist of artists){
-      onProgress?.(`LRCLIB 제목+아티스트 검색: “${title}”`);
+    for(const artist of artists.slice(0,6)){
+      onProgress?.(`LRCLIB 검색: “${title}” / ${artist}`);
       try{
         const r = await searchLrclib(title, artist);
         if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
       }catch(e){}
+      await sleepV15(220);
     }
+    onProgress?.(`LRCLIB 제목 검색: “${title}”`);
     try{
       const r = await searchLrclib(title, '');
       if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
     }catch(e){}
+    await sleepV15(220);
   }
 
-  // 3) LRCLIB broad q search catches alternate metadata/spellings.
+  // 2) Broad q search using title, then title+artist combinations.
+  const queries = [];
   for(const title of titles){
-    onProgress?.(`LRCLIB 확장 검색: “${title}”`);
+    queries.push(title);
+    for(const artist of artists.slice(0,5)) queries.push(`${title} ${artist}`);
+  }
+  for(const q of [...new Set(queries)]){
+    onProgress?.(`확장 검색: “${q}”`);
     try{
-      const rows = await searchLrclibQ(title);
+      const rows = await searchLrclibQ(q);
       const r = chooseLrclibResult(rows, titles);
       if(r) return r;
     }catch(e){}
+    await sleepV15(220);
   }
 
-  // 4) Lyrics.ovh fallback where artist/title are known.
+  // 3) Lyrics.ovh fallback.
   for(const title of titles.slice(0,6)){
-    for(const artist of artists){
-      onProgress?.(`Lyrics.ovh 검색: “${artist} - ${title}”`);
+    for(const artist of artists.slice(0,8)){
+      onProgress?.(`추가 가사 DB 검색: “${artist} - ${title}”`);
       try{
         const r = await searchLyricsOvh(artist, title);
         if(r?.plainLyrics) return r;
@@ -2002,7 +2147,7 @@ async function autoFindMusicData(){
     });
 
     if(!result || !result.plainLyrics){
-      status.textContent = '확장 검색에서도 가사를 찾지 못했어요. 영상 재생은 그대로 사용할 수 있어요.';
+      status.textContent = '무료 가사 데이터베이스의 확장 검색에서도 찾지 못했어요. YouTube 영상은 그대로 재생할 수 있어요.';
       source.textContent = meta ? `YouTube: ${meta.title}` : '';
       return;
     }
