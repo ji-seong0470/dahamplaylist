@@ -963,6 +963,68 @@ body{background:#f7f8fa;color:#171b22}
   .cal-add-hint{display:none}
 }
 
+/* ===== v27 live accompaniment ===== */
+.band-shell{max-width:980px;margin:0 auto;background:#fff;border:1px solid #dfe4e5;border-radius:22px;padding:24px;box-shadow:0 12px 34px rgba(30,50,55,.08)}
+.band-head{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-bottom:18px;border-bottom:1px solid #e7ebec}
+.band-head h3{margin:0 0 5px;font-size:25px}.band-head p{margin:0;color:#747c82;font-size:14px}
+.band-now{min-width:126px;text-align:center;padding:12px 18px;background:#e6f4f1;border-radius:16px;color:#155f59}
+.band-now small{display:block;font-size:11px}.band-now strong{display:block;font-size:28px;margin-top:2px}
+.band-controls{display:grid;grid-template-columns:1fr 1fr 2fr;gap:12px;margin:18px 0}
+.band-control{border:1px solid #dfe3e4;border-radius:14px;padding:12px;background:#fafbfb}
+.band-control label{display:block;font-size:11px;font-weight:800;color:#687178;margin-bottom:8px}
+.band-control select{width:100%;border:1px solid #bbc3c5;border-radius:9px;background:#fff;padding:9px;font:inherit}
+.tempo-row{display:flex;align-items:center;gap:10px}.tempo-row input{flex:1;accent-color:#168779}.tempo-row output{min-width:54px;font-weight:900;color:#176b64}
+.band-transport{display:flex;gap:10px;margin-bottom:22px}.band-transport .btn{flex:1;min-height:48px}.band-stop{background:#fff!important;color:#32383d!important;border:1px solid #9fa7ab!important}
+.band-section-title{margin:21px 0 10px;font-size:16px}
+.chord-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}
+.chord-btn{min-height:54px;border:1px solid #7e898c;border-radius:12px;background:#fff;font:inherit;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 3px 8px rgba(30,45,50,.05)}
+.chord-btn:hover{background:#eef8f6}.chord-btn.active{background:#168779;color:#fff;border-color:#168779;transform:translateY(-2px);box-shadow:0 8px 16px rgba(22,135,121,.24)}
+.mixer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.mixer-card{padding:13px 11px;border:1px solid #dce2e3;border-radius:13px;background:#fafbfb;text-align:center}
+.mixer-card span{display:block;font-weight:800;margin-bottom:10px}.mixer-card input{width:100%;accent-color:#168779}
+.band-beats{display:flex;justify-content:center;gap:8px;margin:18px 0 4px}.band-beat{width:10px;height:10px;border-radius:50%;background:#d3d9da}.band-beat.on{background:#168779;transform:scale(1.35)}
+.band-help{margin-top:18px;padding:13px 15px;border-radius:12px;background:#f2f5f5;color:#657075;font-size:13px;line-height:1.65}
+.easy-band{padding:20px 0 6px}.easy-band h4{margin:0 0 5px;font-size:18px}.easy-band>p{margin:0 0 14px;color:#747d82;font-size:13px}
+.easy-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.easy-preset{border:1px solid #a9b4b6;border-radius:15px;background:#fff;padding:16px 12px;text-align:left;cursor:pointer;font:inherit;transition:.16s ease}
+.easy-preset:hover{background:#f0f8f6;transform:translateY(-2px)}.easy-preset.active{border-color:#168779;background:#e5f5f1;box-shadow:0 0 0 2px rgba(22,135,121,.14)}
+.easy-preset strong{display:block;font-size:17px;margin-bottom:5px}.easy-preset small{display:block;color:#737d81;line-height:1.45}
+.easy-summary{margin:14px 0 4px;padding:11px 14px;border-radius:11px;background:#f2f7f6;color:#286a64;font-size:13px;font-weight:700}
+.advanced-toggle{display:block;margin:11px auto 0;border:0;background:transparent;color:#657276;text-decoration:underline;font:inherit;font-size:13px;cursor:pointer}
+.band-advanced-only{display:none!important}.band-shell.advanced-open .band-advanced-only{display:grid!important}.band-shell.advanced-open .band-tools{display:flex!important}.band-shell.advanced-open .band-section-title{display:block!important}.band-shell.advanced-open .progression-panel{display:block!important}
+.band-transport{margin-top:15px}.band-transport #bandStart{font-size:17px}
+.live-controls{margin:14px 0 6px;padding:17px;border:1px solid #dce4e4;border-radius:16px;background:#fbfcfc}
+.live-controls h4{margin:0 0 4px;font-size:17px}.live-controls>p{margin:0 0 13px;color:#778085;font-size:12px}
+.simple-tempo{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:9px;align-items:stretch;margin-bottom:10px}
+.simple-control{border:1px solid #99a5a8;border-radius:12px;background:#fff;min-height:50px;padding:9px;font:inherit;font-weight:800;cursor:pointer;color:#30383d}
+.simple-control:hover{background:#edf7f4}.simple-control.primary{background:#168779;color:#fff;border-color:#168779}
+.simple-bpm{text-align:center;margin:-2px 0 12px;color:#176b64;font-weight:800;font-size:13px}
+.variation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.variation-btn{border:1px solid #aab4b6;border-radius:12px;background:#fff;min-height:54px;padding:9px;font:inherit;font-weight:800;cursor:pointer}
+.variation-btn:hover{background:#eff8f6}.variation-btn.active{background:#dff3ee;border-color:#168779;color:#12665e}.variation-btn.danger{border-color:#b58e8e;color:#873e3e}
+.live-status{text-align:center;margin-top:11px;color:#607075;font-size:13px;font-weight:700}
+.band-tools{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:12px 0 20px;padding:12px;border:1px solid #dce3e4;border-radius:14px;background:#f8faf9}
+.band-tools .btn{min-height:40px}.transpose-box{display:flex;align-items:center;gap:7px;margin-left:auto}.transpose-box strong{min-width:65px;text-align:center;color:#176b64}
+.progression-panel{margin:18px 0;padding:17px;border:1px solid #dce3e4;border-radius:16px;background:#fbfcfc}
+.progression-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.progression-top select,.save-row input,.save-row select{border:1px solid #aeb8ba;border-radius:9px;padding:9px 10px;background:#fff;font:inherit}
+.progression-auto{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:13px;font-weight:800}.progression-auto input{width:18px;height:18px;accent-color:#168779}
+.progression-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:9px;align-items:stretch;overflow:visible;padding:13px 2px 8px;min-height:76px}
+.progression-empty{width:100%;padding:18px;text-align:center;color:#8a9498;border:1px dashed #c4ccce;border-radius:11px}
+.progression-step{min-width:98px;border:1px solid #9eaaac;border-radius:12px;background:#fff;padding:9px;text-align:center;position:relative}
+.progression-step.active{border-color:#168779;background:#e6f6f2;box-shadow:0 0 0 2px rgba(22,135,121,.16)}
+.progression-step b{display:block;font-size:20px;margin-bottom:7px}.progression-step select{width:100%;border:1px solid #ccd3d4;border-radius:7px;padding:5px;background:#fff;font:inherit;font-size:11px}
+.progression-remove{position:absolute;right:4px;top:2px;border:0;background:transparent;color:#8b9497;cursor:pointer;font-size:15px}
+.progression-actions,.save-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.progression-actions .btn,.save-row .btn{padding:8px 12px}.save-row{padding-top:11px;border-top:1px solid #e2e7e8}.save-row input{flex:1;min-width:160px}.save-row select{min-width:180px}
+@media(min-width:901px){.quick-grid{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:700px){
+  .band-shell{padding:16px;border-radius:17px}.band-head{align-items:flex-start}.band-now{min-width:92px;padding:10px}
+  .band-controls{grid-template-columns:1fr 1fr}.band-control.tempo{grid-column:1/-1}
+  .chord-grid{grid-template-columns:repeat(4,1fr)}.mixer-grid{grid-template-columns:repeat(2,1fr)}
+  .transpose-box{width:100%;margin-left:0;justify-content:center}.progression-auto{width:100%;margin-left:0}.save-row input,.save-row select{width:100%}
+  .easy-presets{grid-template-columns:1fr}.easy-preset{padding:13px}
+  .variation-grid{grid-template-columns:repeat(2,1fr)}.simple-control{font-size:13px}
+}
+
 </style>
 </head>
 <body>
@@ -975,8 +1037,9 @@ body{background:#f7f8fa;color:#171b22}
       <button type="button" class="home-nav" data-go="timeline-list">♫ 찬양 목록</button>
       <button type="button" class="home-nav" data-go="best">☆ 올해의 찬양</button>
       <button type="button" class="home-nav" data-go="calendar">▣ 캘린더</button>
+      <button type="button" class="home-nav" data-go="band">♬ 반주기</button>
       <button type="button" class="home-nav" data-go="favorites">♡ 즐겨찾기</button>
-      <button type="button" class="home-nav" data-go="scores">⚙ 설정</button>
+      <button type="button" class="home-nav" data-go="scores">▤ 악보함</button>
     </div>
   </div>
   <section class="hero">
@@ -999,6 +1062,7 @@ body{background:#f7f8fa;color:#171b22}
     <button class="quick-card" data-go="timeline-list"><span class="quick-icon blue">♫</span><strong>찬양 목록</strong><small>함께 부른 찬양들</small></button>
     <button class="quick-card" data-go="best"><span class="quick-icon gold">☆</span><strong>올해의 찬양</strong><small>올해 기억할 찬양</small></button>
     <button class="quick-card" data-go="calendar"><span class="quick-icon green">▣</span><strong>캘린더</strong><small>찬양한 날들</small></button>
+    <button class="quick-card" data-go="band"><span class="quick-icon green">♬</span><strong>반주기</strong><small>모임용 실시간 반주</small></button>
     <button class="quick-card" data-go="favorites"><span class="quick-icon rose">♡</span><strong>즐겨찾기</strong><small>내가 좋아하는 찬양</small></button>
   </div>
 
@@ -1030,6 +1094,7 @@ body{background:#f7f8fa;color:#171b22}
 
   <div class="tabs dashboard-tabs">
     <button class="tab-btn active" data-view="timeline">찬양 기록</button>
+    <button class="tab-btn" data-view="band">반주기</button>
     <button class="tab-btn" data-view="scores">악보함</button>
     <button class="tab-btn" data-view="best">올해의 찬양</button>
   </div>
@@ -1070,6 +1135,88 @@ body{background:#f7f8fa;color:#171b22}
   <div class="view" id="view-best">
     <div class="year-select" id="yearSelect"></div>
     <div id="bestContent"></div>
+  </div>
+
+  <!-- Live accompaniment -->
+  <div class="view" id="view-band">
+    <div class="band-shell">
+      <div class="band-head">
+        <div><h3>♬ 다함 실시간 반주기</h3><p>분위기와 박자를 고른 뒤 코드를 눌러 반주해 보세요.</p></div>
+        <div class="band-now"><small>현재 코드</small><strong id="bandCurrentChord">C</strong></div>
+      </div>
+      <div class="easy-band">
+        <h4>어떤 느낌으로 부를까요?</h4>
+        <p>음악을 몰라도 괜찮아요. 하나만 고르면 박자와 악기를 자동으로 맞춰 줍니다.</p>
+        <div class="easy-presets" id="easyBandPresets">
+          <button class="easy-preset" data-easy="prayer"><strong>🙏 잔잔한 기도</strong><small>천천히 묵상하거나 기도할 때</small></button>
+          <button class="easy-preset active" data-easy="gentle"><strong>🌿 편안한 찬양</strong><small>대부분의 모임에서 무난하게</small></button>
+          <button class="easy-preset" data-easy="bright"><strong>☀️ 밝고 신나는 찬양</strong><small>박수치며 힘차게 부를 때</small></button>
+        </div>
+        <div class="easy-summary" id="easyBandSummary">편안한 찬양 · 보통 빠르기 · 피아노와 기타 중심</div>
+      </div>
+      <div class="band-controls band-advanced-only">
+        <div class="band-control"><label for="bandStyle">분위기</label><select id="bandStyle"><option value="worship">잔잔한 예배</option><option value="bright">밝은 찬양</option><option value="prayer">묵상·기도</option><option value="groove">리듬 찬양</option></select></div>
+        <div class="band-control"><label for="bandMeter">박자</label><select id="bandMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4">4/4</option><option value="5">5/4</option><option value="6">6/8</option><option value="7">7/8</option><option value="12">12/8</option></select></div>
+        <div class="band-control tempo"><label for="bandTempo">빠르기</label><div class="tempo-row"><input id="bandTempo" type="range" min="50" max="180" value="78"><output id="bandTempoValue">78 BPM</output></div></div>
+      </div>
+      <div class="band-tools band-advanced-only">
+        <button class="btn ghost small" id="bandTapTempo">손으로 박자 맞추기</button>
+        <span class="music-sub" id="bandTapStatus">여러 번 눌러 BPM 설정</span>
+        <div class="transpose-box"><span>전체 키</span><button class="btn ghost small" id="bandKeyDown">−</button><strong id="bandTransposeValue">원키</strong><button class="btn ghost small" id="bandKeyUp">+</button></div>
+      </div>
+      <div class="band-transport"><button class="btn" id="bandStart">▶ 선택한 반주 바로 시작</button><button class="btn band-stop" id="bandStop" disabled>■ 정지</button></div>
+      <div class="live-controls">
+        <h4>노래하면서 바로 조절</h4>
+        <p>어렵게 설정하지 말고, 필요한 순간에 큰 버튼만 눌러 주세요.</p>
+        <div class="simple-tempo">
+          <button class="simple-control" id="simpleSlower" type="button">− 조금 느리게</button>
+          <button class="simple-control primary" id="simpleTap" type="button">👏 노래 박자에 맞춰 누르기</button>
+          <button class="simple-control" id="simpleFaster" type="button">조금 빠르게 +</button>
+        </div>
+        <div class="simple-bpm" id="simpleBpm">현재 빠르기 78</div>
+        <div class="variation-grid">
+          <button class="variation-btn" data-energy="calm" type="button">🌙 잔잔하게</button>
+          <button class="variation-btn active" data-energy="normal" type="button">🌿 기본으로</button>
+          <button class="variation-btn" data-energy="full" type="button">🔥 풍성하게</button>
+          <button class="variation-btn" id="bandFill" type="button">✨ 한 번 변화 주기</button>
+          <button class="variation-btn" id="bandOneBarBreak" type="button">⏸ 한 마디 쉬기</button>
+          <button class="variation-btn danger" id="bandNaturalEnding" type="button">🏁 자연스럽게 끝내기</button>
+        </div>
+        <div class="live-status" id="liveBandStatus">편안한 기본 반주로 준비됐어요.</div>
+      </div>
+      <button class="advanced-toggle" id="bandAdvancedToggle" type="button">직접 조절하려면 세부 설정 열기</button>
+      <div class="band-beats" id="bandBeats" aria-label="현재 박자"></div>
+      <h4 class="band-section-title band-advanced-only">코드 선택</h4>
+      <div class="chord-grid band-advanced-only" id="bandChords">
+        <button class="chord-btn active" data-chord="C">C</button><button class="chord-btn" data-chord="D">D</button><button class="chord-btn" data-chord="E">E</button><button class="chord-btn" data-chord="F">F</button><button class="chord-btn" data-chord="G">G</button><button class="chord-btn" data-chord="A">A</button><button class="chord-btn" data-chord="B">B</button>
+        <button class="chord-btn" data-chord="Cm">Cm</button><button class="chord-btn" data-chord="Dm">Dm</button><button class="chord-btn" data-chord="Em">Em</button><button class="chord-btn" data-chord="Fm">Fm</button><button class="chord-btn" data-chord="Gm">Gm</button><button class="chord-btn" data-chord="Am">Am</button><button class="chord-btn" data-chord="Bm">Bm</button>
+      </div>
+      <div class="progression-panel band-advanced-only">
+        <div class="progression-top">
+          <select id="bandBuiltIn"><option value="">기본 진행 선택</option><option value="G,D,Em,C">G · D · Em · C</option><option value="C,G,Am,F">C · G · Am · F</option><option value="D,A,Bm,G">D · A · Bm · G</option><option value="Em,C,G,D">Em · C · G · D</option><option value="C,Am,F,G">C · Am · F · G</option></select>
+          <button class="btn ghost small" id="bandLoadBuiltIn">불러오기</button>
+          <label class="progression-auto"><input id="bandAutoProgress" type="checkbox" checked> 코드 자동 진행</label>
+        </div>
+        <div class="progression-list" id="bandProgression"><div class="progression-empty">코드를 선택하고 아래 ‘선택 코드 추가’를 눌러 진행을 만들어 보세요.</div></div>
+        <div class="progression-actions"><button class="btn ghost small" id="bandAddChord">+ 선택 코드 추가</button><button class="btn ghost small" id="bandRemoveLast">마지막 삭제</button><button class="btn ghost small" id="bandClearProgression">전체 비우기</button><label class="progression-auto"><input id="bandRepeat" type="checkbox" checked> 반복</label></div>
+        <div class="save-row"><input id="bandPresetName" type="text" placeholder="반주 이름 (예: 주는 나의 힘)"><button class="btn ghost small" id="bandSavePreset">저장</button><select id="bandSavedSelect"><option value="">저장한 반주 선택</option></select><button class="btn ghost small" id="bandLoadSaved">불러오기</button><button class="btn ghost small" id="bandDeleteSaved">삭제</button></div>
+      </div>
+      <h4 class="band-section-title band-advanced-only">악기 음량</h4>
+      <div class="mixer-grid band-advanced-only">
+        <label class="mixer-card"><span>🎹 피아노</span><input id="volPiano" type="range" min="0" max="100" value="72"></label>
+        <label class="mixer-card"><span>🎹 일렉 피아노</span><input id="volEPiano" type="range" min="0" max="100" value="32"></label>
+        <label class="mixer-card"><span>🎸 기타</span><input id="volGuitar" type="range" min="0" max="100" value="50"></label>
+        <label class="mixer-card"><span>🎵 베이스</span><input id="volBass" type="range" min="0" max="100" value="55"></label>
+        <label class="mixer-card"><span>🥁 드럼</span><input id="volDrums" type="range" min="0" max="100" value="45"></label>
+        <label class="mixer-card"><span>🪘 카혼</span><input id="volCajon" type="range" min="0" max="100" value="25"></label>
+        <label class="mixer-card"><span>🪇 셰이커</span><input id="volShaker" type="range" min="0" max="100" value="28"></label>
+        <label class="mixer-card"><span>✨ 탬버린</span><input id="volTambourine" type="range" min="0" max="100" value="24"></label>
+        <label class="mixer-card"><span>🟤 캐스터네츠</span><input id="volCastanets" type="range" min="0" max="100" value="16"></label>
+        <label class="mixer-card"><span>🎻 스트링</span><input id="volStrings" type="range" min="0" max="100" value="30"></label>
+        <label class="mixer-card"><span>☁️ 패드</span><input id="volPad" type="range" min="0" max="100" value="38"></label>
+      </div>
+      <div class="band-help">분위기를 고르고 시작만 누르면 코드와 악기가 자동으로 반복됩니다. 노래가 끝나면 정지를 눌러 주세요.</div>
+    </div>
   </div>
 </div>
  
@@ -2010,7 +2157,7 @@ function showHome(){
 function openDashboardView(target){
   document.getElementById('homeDashboard').style.display='none';
   document.getElementById('dashboardContent').classList.add('open');
-  const map={ 'timeline-list':'timeline', calendar:'timeline', best:'best', scores:'scores' };
+  const map={ 'timeline-list':'timeline', calendar:'timeline', best:'best', scores:'scores', band:'band' };
   const view=map[target]||'timeline';
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===`view-${view}`));
@@ -2051,7 +2198,7 @@ document.addEventListener('click',(e)=>{
   if(!go) return;
   if(go==='timeline'){ e.preventDefault(); const fp=document.getElementById('favoritesPanel');if(fp)fp.style.display='none';showHome(); }
   else if(go==='favorites'){ e.preventDefault(); showFavorites(); }
-  else if(['timeline-list','calendar','best','scores'].includes(go)){ e.preventDefault(); const fp=document.getElementById('favoritesPanel');if(fp)fp.style.display='none';openDashboardView(go); }
+  else if(['timeline-list','calendar','best','scores','band'].includes(go)){ e.preventDefault(); const fp=document.getElementById('favoritesPanel');if(fp)fp.style.display='none';openDashboardView(go); }
 });
 function runHomeSearch(){
   const q=(document.getElementById('homeSearchInput')?.value||'').trim().toLowerCase();
@@ -2183,6 +2330,389 @@ function toggleHomeSongPlayer(event){
   btn.textContent = '▲';
 }
 
+</script>
+<script>
+/* v27 — browser live accompaniment */
+let bandCtx = null;
+let bandMaster = null;
+let bandTimer = null;
+let bandNextTime = 0;
+let bandBeat = 0;
+let bandChord = 'C';
+let bandRunning = false;
+let bandTranspose = 0;
+let bandProgression = [];
+let bandProgressIndex = 0;
+let bandBarsIntoStep = 0;
+let bandMeasureStarted = false;
+let bandProgressFinished = false;
+let bandTapTimes = [];
+let bandEnergy = 'normal';
+let bandBreakBeats = 0;
+let bandBreakRequested = false;
+const bandNodes = new Set();
+const BAND_PRESET_KEY = 'daham_band_presets_v28';
+
+const rootMidi = {C:60,D:62,E:64,F:65,G:67,A:69,B:71};
+const bandEl = id=>document.getElementById(id);
+const bandVol = id=>{
+  const factor=bandEnergy==='calm'?.55:(bandEnergy==='full'?1.22:1);
+  return Math.min(1,Number(bandEl(id)?.value || 0)/100*factor);
+};
+const midiHz = midi=>440*Math.pow(2,(midi-69)/12);
+const bandStepDuration = (tempo,beats)=>(60/tempo)*([6,7,12].includes(beats)?.5:1);
+
+function bandChordMidis(chord, octaveShift=0){
+  const m = /^([A-G])(m?)$/.exec(chord) || ['','C',''];
+  const root = rootMidi[m[1]] + octaveShift*12 + bandTranspose;
+  return [root,root+(m[2]?3:4),root+7];
+}
+function bandTrack(node){
+  bandNodes.add(node);
+  node.addEventListener?.('ended',()=>bandNodes.delete(node),{once:true});
+  return node;
+}
+function bandAudio(){
+  if(!bandCtx){
+    bandCtx = new (window.AudioContext || window.webkitAudioContext)();
+    bandMaster = bandCtx.createGain();
+    bandMaster.gain.value=.72;
+    bandMaster.connect(bandCtx.destination);
+  }
+  if(bandCtx.state==='suspended') bandCtx.resume();
+  return bandCtx;
+}
+function bandTone(freq,time,duration,volume,type='sine',attack=.012){
+  if(volume<=0) return;
+  const ctx=bandAudio(), osc=bandTrack(ctx.createOscillator()), gain=ctx.createGain();
+  osc.type=type; osc.frequency.setValueAtTime(freq,time);
+  gain.gain.setValueAtTime(.0001,time);
+  gain.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),time+attack);
+  gain.gain.exponentialRampToValueAtTime(.0001,time+duration);
+  osc.connect(gain).connect(bandMaster); osc.start(time); osc.stop(time+duration+.04);
+}
+function bandPiano(time,beat){
+  const v=bandVol('volPiano')*.09;
+  bandChordMidis(bandChord).forEach((n,i)=>bandTone(midiHz(n),time+i*.008,.75,v,'triangle',.006));
+  if(beat===0) bandTone(midiHz(bandChordMidis(bandChord,-1)[0]),time,1,v*.8,'sine',.006);
+}
+function bandEPiano(time){
+  const v=bandVol('volEPiano')*.055;
+  bandChordMidis(bandChord).forEach((n,i)=>{
+    bandTone(midiHz(n),time+i*.006,1.05,v,'sine',.018);
+    bandTone(midiHz(n+12),time+i*.006,.72,v*.28,'triangle',.012);
+  });
+}
+function bandGuitar(time){
+  const v=bandVol('volGuitar')*.045;
+  bandChordMidis(bandChord).forEach((n,i)=>bandTone(midiHz(n+12),time+i*.028,.42,v,'sawtooth',.004));
+}
+function bandBass(time){
+  const v=bandVol('volBass')*.13;
+  bandTone(midiHz(bandChordMidis(bandChord,-2)[0]),time,.48,v,'sine',.008);
+}
+function bandPad(time,duration){
+  const v=bandVol('volPad')*.035;
+  bandChordMidis(bandChord,-1).forEach(n=>bandTone(midiHz(n),time,duration,v,'triangle',.32));
+}
+function bandStrings(time,duration){
+  const v=bandVol('volStrings')*.026;
+  bandChordMidis(bandChord,-1).forEach((n,i)=>{
+    bandTone(midiHz(n),time+i*.015,duration,v,'sawtooth',.38);
+    bandTone(midiHz(n+12),time+i*.015,duration,v*.45,'triangle',.3);
+  });
+}
+function bandNoise(time,duration,volume,highpass){
+  if(volume<=0) return;
+  const ctx=bandAudio(), length=Math.max(1,Math.floor(ctx.sampleRate*duration));
+  const buffer=ctx.createBuffer(1,length,ctx.sampleRate), data=buffer.getChannelData(0);
+  for(let i=0;i<length;i++) data[i]=Math.random()*2-1;
+  const src=bandTrack(ctx.createBufferSource()), filter=ctx.createBiquadFilter(), gain=ctx.createGain();
+  src.buffer=buffer; filter.type='highpass'; filter.frequency.value=highpass;
+  gain.gain.setValueAtTime(volume,time); gain.gain.exponentialRampToValueAtTime(.0001,time+duration);
+  src.connect(filter).connect(gain).connect(bandMaster); src.start(time); src.stop(time+duration+.02);
+}
+function bandKick(time,volume){
+  if(volume<=0) return;
+  const ctx=bandAudio(), osc=bandTrack(ctx.createOscillator()), gain=ctx.createGain();
+  osc.type='sine'; osc.frequency.setValueAtTime(125,time); osc.frequency.exponentialRampToValueAtTime(48,time+.16);
+  gain.gain.setValueAtTime(volume,time); gain.gain.exponentialRampToValueAtTime(.0001,time+.2);
+  osc.connect(gain).connect(bandMaster); osc.start(time); osc.stop(time+.22);
+}
+function bandDrums(time,beat,beats,style){
+  const v=bandVol('volDrums'); if(v<=0) return;
+  bandNoise(time,.045,v*.045,5200);
+  if(beat===0 || (style==='groove' && beat%2===0)) bandKick(time,v*.18);
+  const snare = (beats===4&&beat===2)||(beats===3&&beat===1)||(beats===6&&beat===3)||(beats===12&&beat===6)||(![3,4,6,12].includes(beats)&&beat===Math.floor(beats/2));
+  if(snare && style!=='prayer') bandNoise(time,.13,v*.09,900);
+}
+function bandCajon(time,beat,beats){
+  const v=bandVol('volCajon');if(v<=0)return;
+  if(beat===0 || beat===Math.floor(beats/2)) bandKick(time,v*.11);
+  if(beat%2===1) bandNoise(time,.09,v*.065,650);
+}
+function bandShaker(time,beat){
+  const v=bandVol('volShaker');if(v<=0)return;
+  bandNoise(time,.055,v*(beat===0?.055:.035),4200);
+}
+function bandTambourine(time,beat,beats){
+  const v=bandVol('volTambourine');if(v<=0)return;
+  const hit=beats===7?[0,3,5].includes(beat):([6,12].includes(beats)?beat%3===0:beat%2===1);
+  if(!hit)return;
+  bandNoise(time,.12,v*.085,4600);bandNoise(time+.035,.09,v*.05,6200);
+  bandTone(4800,time,.08,v*.012,'square',.002);bandTone(6400,time+.012,.07,v*.009,'square',.002);
+}
+function bandCastanets(time,beat,style){
+  const v=bandVol('volCastanets');if(v<=0||!['bright','groove'].includes(style))return;
+  if(style==='groove'&&beat%2===0)return;
+  bandNoise(time,.032,v*.11,1500);bandNoise(time+.04,.024,v*.065,2100);
+}
+function bandRenderBeats(active=-1){
+  const beats=Number(bandEl('bandMeter')?.value||4);
+  bandEl('bandBeats').innerHTML=Array.from({length:beats},(_,i)=>`<span class="band-beat${i===active?' on':''}"></span>`).join('');
+}
+function renderBandProgression(){
+  const box=bandEl('bandProgression');
+  if(!bandProgression.length){
+    box.innerHTML='<div class="progression-empty">코드를 선택하고 아래 ‘선택 코드 추가’를 눌러 진행을 만들어 보세요.</div>';
+    return;
+  }
+  box.innerHTML=bandProgression.map((step,i)=>`<div class="progression-step${i===bandProgressIndex&&bandRunning?' active':''}" data-step="${i}"><button class="progression-remove" type="button" data-remove-step="${i}" aria-label="삭제">×</button><b>${step.chord}</b><select data-bars-step="${i}" aria-label="마디 수">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}"${step.bars===n?' selected':''}>${n}마디</option>`).join('')}</select></div>`).join('');
+}
+function setBandChord(chord){
+  bandChord=chord;
+  bandEl('bandCurrentChord').textContent=bandChord;
+  document.querySelectorAll('.chord-btn').forEach(x=>x.classList.toggle('active',x.dataset.chord===chord));
+}
+function bandAdvanceProgression(){
+  if(!bandEl('bandAutoProgress').checked || !bandProgression.length) return true;
+  if(!bandMeasureStarted){bandMeasureStarted=true;return true}
+  bandBarsIntoStep++;
+  if(bandBarsIntoStep < bandProgression[bandProgressIndex].bars) return true;
+  bandBarsIntoStep=0;
+  if(bandProgressIndex < bandProgression.length-1) bandProgressIndex++;
+  else if(bandEl('bandRepeat').checked) bandProgressIndex=0;
+  else {stopBand();return false}
+  setBandChord(bandProgression[bandProgressIndex].chord);
+  renderBandProgression();
+  return true;
+}
+function getBandPresets(){try{return JSON.parse(localStorage.getItem(BAND_PRESET_KEY)||'[]')}catch(e){return[]}}
+function setBandPresets(v){localStorage.setItem(BAND_PRESET_KEY,JSON.stringify(v))}
+function renderBandSaved(){
+  const saved=getBandPresets();
+  bandEl('bandSavedSelect').innerHTML='<option value="">저장한 반주 선택</option>'+saved.map((p,i)=>`<option value="${i}">${escapeHtml(p.name)}</option>`).join('');
+}
+function applyBandPreset(p){
+  if(!p) return;
+  bandProgression=(p.progression||[]).map(x=>({chord:x.chord,bars:Number(x.bars)||1}));
+  if(p.tempo){bandEl('bandTempo').value=p.tempo;bandEl('bandTempoValue').value=`${p.tempo} BPM`;bandEl('simpleBpm').textContent=`현재 빠르기 ${p.tempo}`}
+  if(p.meter) bandEl('bandMeter').value=p.meter;
+  if(p.style) bandEl('bandStyle').value=p.style;
+  bandTranspose=Number(p.transpose)||0;
+  bandEl('bandTransposeValue').textContent=bandTranspose===0?'원키':`${bandTranspose>0?'+':''}${bandTranspose}`;
+  ['Piano','EPiano','Guitar','Bass','Drums','Cajon','Shaker','Tambourine','Castanets','Strings','Pad'].forEach(k=>{if(p.volumes?.[k]!=null) bandEl('vol'+k).value=p.volumes[k]});
+  bandProgressIndex=0;bandBarsIntoStep=0;bandMeasureStarted=false;
+  if(bandProgression[0]) setBandChord(bandProgression[0].chord);
+  bandRenderBeats();renderBandProgression();
+}
+const easyBandSettings={
+  prayer:{summary:'잔잔한 기도 · 느린 6/8박자 · 부드러운 기타와 스트링',style:'prayer',meter:'6',tempo:62,progression:['C','Am','F','G'],volumes:{Piano:44,EPiano:46,Guitar:30,Bass:22,Drums:0,Cajon:8,Shaker:7,Tambourine:8,Castanets:0,Strings:56,Pad:48}},
+  gentle:{summary:'편안한 찬양 · 기타·카혼·탬버린이 자동 연주',style:'worship',meter:'4',tempo:78,progression:['G','D','Em','C'],volumes:{Piano:52,EPiano:24,Guitar:58,Bass:38,Drums:8,Cajon:45,Shaker:25,Tambourine:34,Castanets:0,Strings:22,Pad:24}},
+  bright:{summary:'밝고 신나는 찬양 · 기타·셰이커·탬버린·캐스터네츠',style:'bright',meter:'4',tempo:112,progression:['D','A','Bm','G'],volumes:{Piano:38,EPiano:24,Guitar:72,Bass:50,Drums:30,Cajon:54,Shaker:62,Tambourine:68,Castanets:48,Strings:8,Pad:10}}
+};
+function applyEasyBand(key){
+  const p=easyBandSettings[key];if(!p)return;
+  bandEnergy='normal';document.querySelectorAll('[data-energy]').forEach(x=>x.classList.toggle('active',x.dataset.energy==='normal'));
+  applyBandPreset({style:p.style,meter:p.meter,tempo:p.tempo,transpose:0,progression:p.progression.map(chord=>({chord,bars:1})),volumes:p.volumes});
+  bandEl('bandAutoProgress').checked=true;bandEl('bandRepeat').checked=true;
+  bandEl('easyBandSummary').textContent=p.summary;
+  document.querySelectorAll('.easy-preset').forEach(x=>x.classList.toggle('active',x.dataset.easy===key));
+}
+function bandScheduleBeat(time,beat){
+  const beats=Number(bandEl('bandMeter').value), style=bandEl('bandStyle').value;
+  const tempo=Number(bandEl('bandTempo').value), step=bandStepDuration(tempo,beats);
+  const startingBreak=beat===0 && bandBreakRequested;
+  if(startingBreak){bandBreakBeats=beats;bandBreakRequested=false}
+  else if(beat===0 && !bandAdvanceProgression()) return false;
+  if(bandBreakBeats>0){
+    bandBreakBeats--;
+    if(bandBreakBeats===0) setTimeout(()=>{if(bandRunning)bandEl('liveBandStatus').textContent='반주가 다시 시작됐어요.'},Math.max(0,(time-bandCtx.currentTime)*1000));
+    const delay=Math.max(0,(time-bandCtx.currentTime)*1000);
+    setTimeout(()=>{if(bandRunning)bandRenderBeats(beat)},delay);
+    return true;
+  }
+  const chordHit = beat===0 || style==='bright' || style==='groove' || (style==='worship'&&beat%2===0);
+  if(chordHit) bandPiano(time,beat);
+  if(chordHit) bandEPiano(time);
+  if(style!=='prayer' && (style==='bright'||style==='groove'||beat===0||beat%2===0)) bandGuitar(time);
+  if(beat===0 || style==='bright' || style==='groove') bandBass(time);
+  if(beat===0){bandPad(time,step*beats*.94);bandStrings(time,step*beats*.96)}
+  bandDrums(time,beat,beats,style);
+  bandCajon(time,beat,beats);
+  bandShaker(time,beat);
+  bandTambourine(time,beat,beats);
+  bandCastanets(time,beat,style);
+  const delay=Math.max(0,(time-bandCtx.currentTime)*1000);
+  setTimeout(()=>{if(bandRunning) bandRenderBeats(beat)},delay);
+  return true;
+}
+function bandScheduler(){
+  if(!bandRunning) return;
+  const beats=Number(bandEl('bandMeter').value), tempo=Number(bandEl('bandTempo').value);
+  const step=bandStepDuration(tempo,beats);
+  while(bandNextTime < bandCtx.currentTime+.12){
+    if(!bandScheduleBeat(bandNextTime,bandBeat)) break;
+    bandNextTime += step;
+    bandBeat=(bandBeat+1)%beats;
+  }
+}
+function startBand(){
+  bandAudio();
+  if(bandRunning) return;
+  bandProgressIndex=0;bandBarsIntoStep=0;bandMeasureStarted=false;bandProgressFinished=false;
+  if(bandEl('bandAutoProgress').checked && bandProgression[0]) setBandChord(bandProgression[0].chord);
+  bandRunning=true; bandBeat=0; bandNextTime=bandCtx.currentTime+.08;
+  bandMaster.gain.cancelScheduledValues(bandCtx.currentTime);
+  bandMaster.gain.setTargetAtTime(.72,bandCtx.currentTime,.03);
+  bandTimer=setInterval(bandScheduler,25); bandScheduler();
+  renderBandProgression();
+  bandEl('bandStart').disabled=true; bandEl('bandStop').disabled=false;
+  bandEl('bandStart').textContent='반주 중…';
+  bandEl('liveBandStatus').textContent='반주 중이에요. 아래 버튼으로 편하게 변화를 주세요.';
+}
+function stopBand(){
+  bandRunning=false; clearInterval(bandTimer); bandTimer=null;
+  if(bandCtx && bandMaster){
+    bandMaster.gain.cancelScheduledValues(bandCtx.currentTime);
+    bandMaster.gain.setTargetAtTime(.0001,bandCtx.currentTime,.03);
+  }
+  setTimeout(()=>{bandNodes.forEach(n=>{try{n.stop()}catch(e){}});bandNodes.clear()},120);
+  bandRenderBeats();
+  renderBandProgression();
+  bandEl('bandStart').disabled=false; bandEl('bandStop').disabled=true;
+  bandEl('bandStart').textContent='▶ 선택한 반주 바로 시작';
+  bandEl('liveBandStatus').textContent='반주가 멈췄어요. 다시 시작할 수 있습니다.';
+}
+
+bandEl('easyBandPresets').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-easy]');if(!btn)return;
+  if(bandRunning)stopBand();applyEasyBand(btn.dataset.easy);
+});
+bandEl('bandAdvancedToggle').addEventListener('click',()=>{
+  const shell=bandEl('bandAdvancedToggle').closest('.band-shell');
+  const open=shell.classList.toggle('advanced-open');
+  bandEl('bandAdvancedToggle').textContent=open?'세부 설정 닫기':'직접 조절하려면 세부 설정 열기';
+});
+function setSimpleTempo(value){
+  const bpm=Math.max(50,Math.min(180,Number(value)));
+  bandEl('bandTempo').value=bpm;bandEl('bandTempoValue').value=`${bpm} BPM`;bandEl('simpleBpm').textContent=`현재 빠르기 ${bpm}`;
+}
+function tapSimpleTempo(){
+  const now=performance.now();
+  if(bandTapTimes.length && now-bandTapTimes.at(-1)>2000) bandTapTimes=[];
+  bandTapTimes.push(now);bandTapTimes=bandTapTimes.slice(-6);
+  if(bandTapTimes.length>=2){
+    const gaps=bandTapTimes.slice(1).map((t,i)=>t-bandTapTimes[i]);
+    const bpm=Math.round(60000/(gaps.reduce((a,b)=>a+b,0)/gaps.length));
+    setSimpleTempo(bpm);bandEl('bandTapStatus').textContent=`${bandEl('bandTempo').value} BPM으로 맞춤`;bandEl('liveBandStatus').textContent='누른 박자에 맞춰 빠르기를 바꿨어요.';
+  }else{bandEl('bandTapStatus').textContent='같은 박자로 계속 눌러 주세요';bandEl('liveBandStatus').textContent='노래 박자에 맞춰 버튼을 3~4번 눌러 주세요.'}
+}
+bandEl('bandTempo').addEventListener('input',e=>setSimpleTempo(e.target.value));
+bandEl('simpleSlower').addEventListener('click',()=>{setSimpleTempo(Number(bandEl('bandTempo').value)-5);bandEl('liveBandStatus').textContent='조금 느리게 바꿨어요.'});
+bandEl('simpleFaster').addEventListener('click',()=>{setSimpleTempo(Number(bandEl('bandTempo').value)+5);bandEl('liveBandStatus').textContent='조금 빠르게 바꿨어요.'});
+bandEl('simpleTap').addEventListener('click',tapSimpleTempo);
+bandEl('bandMeter').addEventListener('change',()=>{bandBeat=0;bandRenderBeats()});
+bandEl('bandStart').addEventListener('click',startBand);
+bandEl('bandStop').addEventListener('click',stopBand);
+bandEl('bandChords').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-chord]'); if(!btn) return;
+  setBandChord(btn.dataset.chord);
+  if(!bandRunning){
+    bandAudio();
+    bandMaster.gain.cancelScheduledValues(bandCtx.currentTime);
+    bandMaster.gain.setTargetAtTime(.72,bandCtx.currentTime,.02);
+    bandPiano(bandCtx.currentTime+.03,0);
+  }
+});
+bandEl('bandAddChord').addEventListener('click',()=>{
+  bandProgression.push({chord:bandChord,bars:1});renderBandProgression();
+});
+bandEl('bandRemoveLast').addEventListener('click',()=>{
+  bandProgression.pop();bandProgressIndex=Math.min(bandProgressIndex,Math.max(0,bandProgression.length-1));renderBandProgression();
+});
+bandEl('bandClearProgression').addEventListener('click',()=>{
+  if(bandRunning) stopBand();bandProgression=[];bandProgressIndex=0;renderBandProgression();
+});
+bandEl('bandProgression').addEventListener('click',e=>{
+  const rm=e.target.closest('[data-remove-step]');if(!rm)return;
+  bandProgression.splice(Number(rm.dataset.removeStep),1);
+  bandProgressIndex=Math.min(bandProgressIndex,Math.max(0,bandProgression.length-1));renderBandProgression();
+});
+bandEl('bandProgression').addEventListener('change',e=>{
+  if(!e.target.matches('[data-bars-step]'))return;
+  const step=bandProgression[Number(e.target.dataset.barsStep)];if(step)step.bars=Number(e.target.value);
+});
+bandEl('bandLoadBuiltIn').addEventListener('click',()=>{
+  const value=bandEl('bandBuiltIn').value;if(!value){showToast('기본 진행을 먼저 선택해 주세요.');return}
+  bandProgression=value.split(',').map(chord=>({chord,bars:1}));bandProgressIndex=0;setBandChord(bandProgression[0].chord);renderBandProgression();
+});
+function changeBandTranspose(delta){
+  bandTranspose=Math.max(-6,Math.min(6,bandTranspose+delta));
+  bandEl('bandTransposeValue').textContent=bandTranspose===0?'원키':`${bandTranspose>0?'+':''}${bandTranspose}`;
+  if(!bandRunning){bandAudio();bandMaster.gain.setTargetAtTime(.72,bandCtx.currentTime,.02);bandPiano(bandCtx.currentTime+.03,0)}
+}
+bandEl('bandKeyDown').addEventListener('click',()=>changeBandTranspose(-1));
+bandEl('bandKeyUp').addEventListener('click',()=>changeBandTranspose(1));
+bandEl('bandTapTempo').addEventListener('click',tapSimpleTempo);
+document.querySelectorAll('[data-energy]').forEach(btn=>btn.addEventListener('click',()=>{
+  bandEnergy=btn.dataset.energy;
+  document.querySelectorAll('[data-energy]').forEach(x=>x.classList.toggle('active',x===btn));
+  const text={calm:'악기 소리를 줄여 잔잔하게 바꿨어요.',normal:'편안한 기본 반주로 돌아왔어요.',full:'후렴처럼 악기 소리를 풍성하게 했어요.'};
+  bandEl('liveBandStatus').textContent=text[bandEnergy];
+}));
+bandEl('bandFill').addEventListener('click',()=>{
+  if(!bandRunning){showToast('반주를 먼저 시작해 주세요.');return}
+  const t=bandCtx.currentTime+.03,v=Math.max(.18,bandVol('volDrums'),bandVol('volCajon'));
+  [0,.12,.24,.36].forEach((d,i)=>bandNoise(t+d,.08,v*(i===3?.09:.055),850));
+  bandKick(t+.36,v*.15);bandEl('liveBandStatus').textContent='다음 부분으로 넘어가도록 짧게 변화를 줬어요.';
+});
+bandEl('bandOneBarBreak').addEventListener('click',()=>{
+  if(!bandRunning){showToast('반주를 먼저 시작해 주세요.');return}
+  bandBreakRequested=true;bandEl('liveBandStatus').textContent='다음 마디에서 한 마디 쉬었다가 다시 시작할게요.';
+});
+bandEl('bandNaturalEnding').addEventListener('click',()=>{
+  if(!bandRunning){showToast('반주를 먼저 시작해 주세요.');return}
+  bandRunning=false;clearInterval(bandTimer);bandTimer=null;
+  const t=bandCtx.currentTime+.04,beats=Number(bandEl('bandMeter').value),step=bandStepDuration(Number(bandEl('bandTempo').value),beats);
+  bandMaster.gain.cancelScheduledValues(bandCtx.currentTime);bandMaster.gain.setTargetAtTime(.72,bandCtx.currentTime,.02);
+  bandPiano(t,0);bandEPiano(t);bandBass(t);bandStrings(t,Math.max(1.4,step*2));bandPad(t,Math.max(1.4,step*2));
+  bandEl('bandStart').textContent='마무리 중…';bandEl('liveBandStatus').textContent='현재 코드로 자연스럽게 마무리하고 있어요.';
+  setTimeout(stopBand,Math.max(1500,step*2000));
+});
+bandEl('bandSavePreset').addEventListener('click',()=>{
+  const name=bandEl('bandPresetName').value.trim();
+  if(!name){showToast('반주 이름을 입력해 주세요.');return}
+  if(!bandProgression.length){showToast('코드 진행을 먼저 만들어 주세요.');return}
+  const saved=getBandPresets();
+  const data={name,progression:bandProgression,tempo:Number(bandEl('bandTempo').value),meter:bandEl('bandMeter').value,style:bandEl('bandStyle').value,transpose:bandTranspose,volumes:{Piano:Number(bandEl('volPiano').value),EPiano:Number(bandEl('volEPiano').value),Guitar:Number(bandEl('volGuitar').value),Bass:Number(bandEl('volBass').value),Drums:Number(bandEl('volDrums').value),Cajon:Number(bandEl('volCajon').value),Shaker:Number(bandEl('volShaker').value),Tambourine:Number(bandEl('volTambourine').value),Castanets:Number(bandEl('volCastanets').value),Strings:Number(bandEl('volStrings').value),Pad:Number(bandEl('volPad').value)}};
+  const found=saved.findIndex(x=>x.name===name);if(found>=0)saved[found]=data;else saved.push(data);
+  setBandPresets(saved);renderBandSaved();showToast('이 기기에 반주를 저장했어요.');
+});
+bandEl('bandLoadSaved').addEventListener('click',()=>{
+  const raw=bandEl('bandSavedSelect').value,i=Number(raw);const saved=getBandPresets();
+  if(raw===''||!Number.isInteger(i)||!saved[i]){showToast('저장한 반주를 선택해 주세요.');return}
+  applyBandPreset(saved[i]);bandEl('bandPresetName').value=saved[i].name;
+});
+bandEl('bandDeleteSaved').addEventListener('click',()=>{
+  const raw=bandEl('bandSavedSelect').value,i=Number(raw),saved=getBandPresets();
+  if(raw===''||!Number.isInteger(i)||!saved[i]){showToast('삭제할 반주를 선택해 주세요.');return}
+  saved.splice(i,1);setBandPresets(saved);renderBandSaved();showToast('저장한 반주를 삭제했어요.');
+});
+bandRenderBeats();
+renderBandProgression();
+renderBandSaved();
+applyEasyBand('gentle');
 </script>
 </body>
 </html>
