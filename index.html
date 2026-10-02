@@ -780,79 +780,6 @@ root{
   }
 
 
-  /* v10 — 악보·가사 뷰어 */
-  .music-sheet-btn{
-    border:1px solid #5B5B56;background:#fff;color:var(--navy);
-    border-radius:9px;padding:6px 9px;margin-left:6px;cursor:pointer;
-    font:inherit;font-size:12px;font-weight:700;
-  }
-  .music-sheet-btn:hover{background:#F4F5F6;}
-  .music-modal{max-width:760px;}
-  .music-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px;}
-  .music-head h2{margin:0 0 4px;font-size:23px;}
-  .music-sub{color:var(--ink-soft);font-size:13px;}
-  .music-tabs{display:flex;gap:7px;border-bottom:1px solid #B9B9B2;margin-bottom:16px;}
-  .music-tab{border:0;background:transparent;padding:10px 12px;cursor:pointer;font:inherit;color:var(--ink-soft);}
-  .music-tab.active{color:var(--navy);font-weight:700;border-bottom:3px solid var(--sage);}
-  .music-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0 14px;}
-  .music-toolbar button,.music-toolbar select{
-    border:1px solid #686862;background:#fff;border-radius:9px;padding:7px 10px;font:inherit;color:var(--ink);
-  }
-  .music-toolbar button{cursor:pointer;}
-  .key-label{font-weight:700;margin-right:2px;}
-  .sheet-content{
-    white-space:pre-wrap;line-height:1.9;font-size:17px;background:#fff;
-    border:1px solid #686862;border-radius:14px;padding:20px;min-height:190px;
-  }
-  .sheet-content.lyrics-only{font-size:20px;line-height:2.05;}
-  .sheet-empty{text-align:center;color:var(--ink-soft);padding:34px 12px;}
-  .sheet-empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:7px;}
-  .music-close{white-space:nowrap;}
-  @media(max-width:640px){
-    .music-head{display:block}.music-close{margin-top:10px}
-    .sheet-content{padding:16px;font-size:16px}
-    .sheet-content.lyrics-only{font-size:19px}
-  }
-
-
-  /* v11 — YouTube 곡 정보 + 무료 가사 자동 검색 */
-  .music-auto-box{
-    margin:0 0 14px;padding:12px 14px;border:1px solid #8A8A83;
-    border-radius:12px;background:#F7F7F7;font-size:13px;line-height:1.6;
-  }
-  .music-auto-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
-  .music-auto-status{color:var(--ink-soft);flex:1;min-width:220px;}
-  .music-auto-btn{
-    border:1px solid #5B5B56;background:#fff;border-radius:9px;
-    padding:7px 10px;cursor:pointer;font:inherit;font-weight:700;color:var(--navy);
-  }
-  .music-auto-btn:disabled{opacity:.5;cursor:not-allowed;}
-  .api-key-box{display:flex;gap:7px;margin-top:9px;}
-  .api-key-box input{
-    flex:1;min-width:0;border:1px solid #686862;border-radius:9px;
-    padding:8px 10px;font:inherit;background:#fff;
-  }
-  .music-source{margin-top:7px;color:var(--ink-soft);font-size:12px;}
-
-
-  /* v15 — 선택(드래그) 가독성 수정 */
-  ::selection { background:#D9E8FF; color:#111 !important; }
-  ::-moz-selection { background:#D9E8FF; color:#111 !important; }
-  input::selection, textarea::selection { background:#D9E8FF; color:#111 !important; }
-
-
-  /* v16 — 브라우저 무료 Whisper 전사 */
-  .local-ai-box{margin-top:10px;padding:12px;border:1px dashed #777770;border-radius:10px;background:#fff}
-  .local-ai-title{font-weight:800;margin-bottom:5px}
-  .local-ai-help,.local-ai-file{font-size:12px;color:var(--ink-soft);line-height:1.55}
-  .local-ai-file{margin-top:7px;word-break:break-all}
-
-
-  /* v17 — 고정확도 전사 + 확인 후 저장 */
-  .ai-preview{display:none;margin-top:10px;padding:12px;border:1px solid #777770;border-radius:10px;background:#fafafa}
-  .ai-preview textarea{width:100%;min-height:220px;box-sizing:border-box;padding:12px;border:1px solid #777770;border-radius:8px;font:inherit;line-height:1.7;background:#fff;color:#111}
-  .ai-preview-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-
   /* v18 — DAHAM photo dashboard */
   body{background:#f6f7f8;color:#20242b}
   .site-shell{background:#fff}
@@ -871,7 +798,6 @@ root{
   .dashboard-tabs{margin-bottom:28px;background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:5px;display:inline-flex;box-shadow:0 4px 14px rgba(31,41,55,.04)}.dashboard-tabs .tab-btn{padding:9px 16px;border:0!important;border-radius:10px;top:0}.dashboard-tabs .tab-btn.active{background:#20242b;color:white}
   .entry{background:#fff!important;border:1px solid #e5e7eb!important;border-radius:18px!important;padding:20px!important;margin-bottom:14px!important;box-shadow:0 5px 18px rgba(31,41,55,.045)}
   .month-label{font-size:18px!important;color:#20242b!important;margin-bottom:12px!important}.theme{font-weight:700}.song-list li{padding:7px 0}.listen-btn{border-radius:999px!important}
-  .music-sheet-btn{display:none!important}.music-sheet-overlay{display:none!important}
   ::selection{background:#d9e8ff!important;color:#111!important}::-moz-selection{background:#d9e8ff!important;color:#111!important}
   @media(max-width:850px){.site-nav{padding:0 18px}.nav-actions{display:none}.hero{height:540px;min-height:440px;background-position:center 45%}.hero-copy h1{font-size:34px}.dashboard-wrap{padding-left:18px;padding-right:18px}.quick-grid{grid-template-columns:repeat(2,1fr)}.section-heading{align-items:flex-start;flex-direction:column}.section-heading .btn{width:100%}}
   @media(max-width:520px){.brand span{display:none}.hero{height:500px;min-height:430px;background-size:cover;background-position:center 46%;background-repeat:no-repeat;background-color:#1e6c72}.quick-grid{gap:10px}.quick-card{min-height:130px;padding:16px 10px}.quick-card strong{font-size:16px}.dashboard-tabs{display:flex;width:100%;overflow:auto}.dashboard-tabs .tab-btn{white-space:nowrap;flex:1}.hero-copy{bottom:34px}}
@@ -951,6 +877,90 @@ body{background:#f7f8fa;color:#171b22}
  .hero{height:500px;min-height:500px;background-position:center 44%}.hero-copy{padding-bottom:20px}.hero-kicker{font-size:14px}.hero-copy h1{font-size:34px}.hero-copy p{font-size:15px}
  .hero-search{height:56px;border-radius:18px;padding-left:15px}.hero-search button{height:43px;min-width:72px}
  .dashboard-wrap{padding:14px 14px 70px}.quick-grid{gap:10px}.quick-card{min-height:125px}.recent-grid{grid-template-columns:1fr}
+}
+
+/* ===== v26 responsive hero composition =====
+   Keep the portrait cover's composition intact instead of cropping it to fill
+   wide screens. The copy stays below the magnetic DAHAM lettering. */
+.hero{
+  height:650px;
+  min-height:650px;
+  background-color:#237780;
+  background-image:url('daham-cover.jpeg');
+  background-size:auto 100%;
+  background-position:center top;
+  background-repeat:no-repeat;
+}
+.hero-shade{
+  background:linear-gradient(180deg,transparent 50%,rgba(0,27,31,.08) 65%,rgba(0,27,31,.40) 100%);
+}
+.hero-copy{
+  width:min(680px,calc(100% - 40px));
+  padding-bottom:24px;
+}
+.hero-kicker{font-size:16px}
+.hero-copy h1{margin:9px 0 6px;font-size:43px}
+.hero-copy p{margin-bottom:18px;font-size:16px}
+.hero-search{height:58px;border-radius:20px}
+.hero-search button{height:46px}
+
+@media(max-width:900px){
+  .hero{
+    height:600px;
+    min-height:600px;
+    background-size:auto 100%;
+    background-position:center top;
+  }
+  .hero-copy{width:min(650px,calc(100% - 36px));padding-bottom:22px}
+  .hero-copy h1{font-size:38px}
+}
+
+@media(max-width:560px){
+  .hero{
+    height:540px;
+    min-height:540px;
+    /* A touch taller than the hero moves the wooden rail lower into view. */
+    background-size:auto 104%;
+    background-position:center top;
+  }
+  .hero-copy{width:calc(100% - 28px);padding-bottom:18px}
+  .hero-kicker{font-size:13px}
+  .hero-copy h1{margin:7px 0 5px;font-size:31px}
+  .hero-copy p{margin-bottom:14px;font-size:14px}
+  .hero-search{height:54px;border-radius:17px;padding-left:14px;gap:8px}
+  .hero-search input{font-size:14px}
+  .hero-search button{height:42px;min-width:68px;border-radius:14px}
+}
+
+/* ===== v26 activated calendar ===== */
+.cal-nav{gap:10px}
+.cal-nav-center{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.cal-today-btn{border-color:#287b82!important;color:#17666d!important;background:#eefafa!important}
+.cal-grid{border:2px solid #525b61;border-right:0;border-bottom:0;border-radius:10px}
+.cal-dow,.cal-cell{border-right:2px solid #747d82;border-bottom:2px solid #747d82}
+.cal-dow{padding:10px 4px;font-size:13px;font-weight:700;background:#eef1f2}
+.cal-dow.today-dow{background:#dff3ee;color:#0d6d64;box-shadow:inset 0 -3px #168779}
+.cal-dow:last-child{color:#246dca!important}
+.cal-cell{background:#fff;cursor:pointer;transition:background .15s ease}
+.cal-cell:hover{background:#f1f8f7}
+.cal-cell.saturday .cal-daynum{color:#246dca!important;font-weight:800}
+.cal-cell.today{background:#e8f8f3;box-shadow:inset 0 0 0 3px #168779}
+.cal-cell.today .cal-daynum{color:#0b655c!important;font-weight:900}
+.cal-today{display:inline-block;margin-left:5px;padding:1px 6px;border-radius:999px;background:#168779;color:#fff;font-size:9px;font-weight:800;vertical-align:1px}
+.cal-cell.empty-cell{cursor:default;background:#f3f5f5}
+.cal-cell.empty-cell:hover{background:#f3f5f5}
+.cal-add-hint{position:absolute;right:6px;bottom:5px;color:#8a9698;font-size:9px;opacity:0}
+.cal-cell:not(.has-entry):hover .cal-add-hint{opacity:1}
+.mini-song-wrap .inline-player{width:100%;margin-top:8px}
+@media(max-width:560px){
+  .cal-nav{align-items:stretch}
+  .cal-nav .btn{padding:7px 8px;font-size:11px}
+  .cal-nav-center{gap:5px}
+  .cal-title{font-size:15px}
+  .cal-dow{font-size:11px;padding:7px 2px}
+  .cal-cell{min-height:72px}
+  .cal-today{display:block;width:max-content;margin:3px 0 0}
+  .cal-add-hint{display:none}
 }
 
 </style>
@@ -1037,7 +1047,10 @@ body{background:#f7f8fa;color:#171b22}
     <div id="timelineCalendar" style="display:none;">
       <div class="cal-nav">
         <button class="btn ghost small" id="calPrev">‹ 이전 달</button>
-        <div class="cal-title" id="calTitle"></div>
+        <div class="cal-nav-center">
+          <button class="btn ghost small cal-today-btn" id="calToday">오늘</button>
+          <div class="cal-title" id="calTitle"></div>
+        </div>
         <button class="btn ghost small" id="calNext">다음 달 ›</button>
       </div>
       <div class="cal-grid" id="calGrid"></div>
@@ -1129,71 +1142,6 @@ body{background:#f7f8fa;color:#171b22}
   <div class="modal" id="scoreViewModal"></div>
 </div>
  
-
-<!-- Guitar sheet / lyrics modal -->
-<div class="overlay" id="musicSheetOverlay">
-  <div class="modal music-modal">
-    <div class="music-head">
-      <div>
-        <h2 id="musicSheetTitle">악보·가사</h2>
-        <div class="music-sub" id="musicSheetArtist"></div>
-      </div>
-      <button class="btn ghost small music-close" id="musicSheetClose">닫기</button>
-    </div>
-    <div class="music-auto-box">
-      <div class="music-auto-row">
-        <span class="music-auto-status" id="musicAutoStatus">YouTube 링크만으로 가사를 여러 방식으로 찾아볼 준비가 됐어요.</span>
-        <button type="button" class="music-auto-btn" id="musicAutoSearch">🔎 자동으로 찾기</button>
-        <button type="button" class="music-auto-btn" id="musicApiToggle">⚙️ YouTube API</button>
-      </div>
-      <div class="api-key-box" id="musicApiBox" style="display:none;">
-        <input type="password" id="youtubeApiKeyInput" autocomplete="off" placeholder="YouTube Data API 키 입력">
-        <button type="button" class="music-auto-btn" id="youtubeApiSave">저장</button>
-      </div>
-      <div class="local-ai-box">
-        <div class="local-ai-title">✨ 무료 AI 가사 인식 (브라우저)</div>
-        <div class="local-ai-help">무료 검색에 없는 곡은 음원/녹음 파일을 선택하면 이 컴퓨터에서 더 정확한 Whisper Small 모델로 전사합니다. API 요금과 서버 요금은 없습니다. 결과는 확인 후에만 저장됩니다.</div>
-        <div class="music-auto-row" style="margin-top:8px">
-          <input id="localAiAudio" type="file" accept="audio/*,.mp3,.wav,.m4a,.webm,.mp4" style="display:none">
-          <button type="button" class="music-auto-btn" id="localAiPick">🎵 음원 선택</button>
-          <button type="button" class="music-auto-btn" id="localAiStart" disabled>✨ 무료 AI 전사</button>
-        </div>
-        <div class="local-ai-file" id="localAiFileName">선택된 파일 없음</div>
-        <div class="ai-preview" id="localAiPreview">
-          <div style="font-weight:800;margin-bottom:7px">AI 전사 미리보기 — 틀린 부분은 직접 고칠 수 있어요.</div>
-          <textarea id="localAiPreviewText" spellcheck="false"></textarea>
-          <div class="ai-preview-actions">
-            <button type="button" class="music-auto-btn" id="localAiSave">💾 이 가사 저장</button>
-            <button type="button" class="music-auto-btn" id="localAiDiscard">취소</button>
-          </div>
-        </div>
-      </div>
-      <div class="music-source" id="musicSourceInfo"></div>
-    </div>
-    <div class="music-tabs">
-      <button class="music-tab active" data-music-tab="guitar">🎸 기타 악보</button>
-      <button class="music-tab" data-music-tab="lyrics">🎤 가사</button>
-    </div>
-    <div id="guitarPane">
-      <div class="music-toolbar">
-        <span class="key-label">Key <span id="currentKey">-</span></span>
-        <button type="button" id="keyDown">−1</button>
-        <button type="button" id="keyUp">+1</button>
-        <select id="keySelect" aria-label="키 선택"></select>
-        <span id="capoInfo" class="music-sub"></span>
-      </div>
-      <div class="sheet-content" id="guitarContent"></div>
-    </div>
-    <div id="lyricsPane" style="display:none;">
-      <div class="music-toolbar">
-        <span class="music-sub">글씨 크기</span>
-        <button type="button" id="lyricsSmaller">A−</button>
-        <button type="button" id="lyricsLarger">A+</button>
-      </div>
-      <div class="sheet-content lyrics-only" id="lyricsContent"></div>
-    </div>
-  </div>
-</div>
 
 <!-- Confirm modal -->
 <div class="overlay" id="confirmOverlay">
@@ -1447,6 +1395,9 @@ function renderCalendar(){
   const year = calDate.getFullYear();
   const month = calDate.getMonth();
   document.getElementById('calTitle').textContent = `${year}년 ${month+1}월`;
+  const now = new Date();
+  const isCurrentMonth = year === now.getFullYear() && month === now.getMonth();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
  
   const entriesByDate = {};
   entries.forEach(e=>{ if(e.date) entriesByDate[e.date] = e; });
@@ -1456,7 +1407,7 @@ function renderCalendar(){
   const daysInMonth = new Date(year, month+1, 0).getDate();
  
   const dowLabels = ['일','월','화','수','목','금','토'];
-  let html = dowLabels.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  let html = dowLabels.map((d,i)=>`<div class="cal-dow${isCurrentMonth && i===now.getDay() ? ' today-dow' : ''}">${d}</div>`).join('');
  
   for(let i=0; i<startOffset; i++){
     html += `<div class="cal-cell empty-cell"></div>`;
@@ -1469,17 +1420,23 @@ function renderCalendar(){
     const dow = currentDate.getDay();
     const dayClass = dow === 0 ? ' sunday' : (dow === 6 ? ' saturday' : '');
     const holidayClass = holiday ? ' holiday' : '';
+    const todayClass = dateStr === todayStr ? ' today' : '';
+    const todayHtml = dateStr === todayStr ? '<span class="cal-today">오늘</span>' : '';
     const holidayHtml = holiday ? `<div class="cal-holiday">${holiday}</div>` : '';
     if(e){
-      html += `<div class="cal-cell has-entry${dayClass}${holidayClass}" data-date="${dateStr}">
-        <div class="cal-daynum">${day}</div>
+      html += `<div class="cal-cell has-entry${dayClass}${holidayClass}${todayClass}" data-date="${dateStr}" title="기록 보기">
+        <div class="cal-daynum">${day}${todayHtml}</div>
         ${holidayHtml}
         <div class="cal-theme">${themeBadge(e.theme)}</div>
       </div>`;
     } else {
-      html += `<div class="cal-cell${dayClass}${holidayClass}"><div class="cal-daynum">${day}</div>${holidayHtml}</div>`;
+      html += `<div class="cal-cell${dayClass}${holidayClass}${todayClass}" data-date="${dateStr}" title="이 날짜에 찬양 기록 추가">
+        <div class="cal-daynum">${day}${todayHtml}</div>${holidayHtml}<span class="cal-add-hint">+ 기록</span></div>`;
     }
   }
+  const usedCells = startOffset + daysInMonth;
+  const trailingCells = (7 - (usedCells % 7)) % 7;
+  for(let i=0; i<trailingCells; i++) html += `<div class="cal-cell empty-cell"></div>`;
   document.getElementById('calGrid').innerHTML = html;
 }
  
@@ -1501,6 +1458,10 @@ function openDayDetail(dateStr){
     ${e.comment ? `<p class="comment">${escapeHtml(e.comment)}</p>` : ''}
     <div class="modal-actions">
       <button class="btn ghost" id="closeDetail">닫기</button>
+      <span>
+        <button class="btn ghost small" id="downloadCalendarFile">캘린더에 저장</button>
+        <button class="btn ghost small" id="openGoogleCalendar">Google 캘린더</button>
+      </span>
       <button class="btn" id="editFromDetail">수정하기</button>
     </div>
   `;
@@ -1512,6 +1473,37 @@ function openDayDetail(dateStr){
     document.getElementById('detailOverlay').classList.remove('open');
     openEdit(e.id);
   });
+  document.getElementById('openGoogleCalendar').addEventListener('click', ()=>{
+    const start = String(e.date || '').replaceAll('-','');
+    const endDate = new Date(`${e.date}T00:00:00`);
+    endDate.setDate(endDate.getDate()+1);
+    const end = `${endDate.getFullYear()}${String(endDate.getMonth()+1).padStart(2,'0')}${String(endDate.getDate()).padStart(2,'0')}`;
+    const details = [...(e.songs || []).map(s=>`${s.title}${s.artist ? ' - '+s.artist : ''}`), e.comment || ''].filter(Boolean).join('\n');
+    const params = new URLSearchParams({
+      action:'TEMPLATE',
+      text:`다함 찬양 · ${e.theme || '주제 미정'}`,
+      dates:`${start}/${end}`,
+      details
+    });
+    window.open(`https://calendar.google.com/calendar/render?${params.toString()}`,'_blank','noopener');
+  });
+  document.getElementById('downloadCalendarFile').addEventListener('click', ()=>{
+    const start = String(e.date || '').replaceAll('-','');
+    const endDate = new Date(`${e.date}T00:00:00`);
+    endDate.setDate(endDate.getDate()+1);
+    const end = `${endDate.getFullYear()}${String(endDate.getMonth()+1).padStart(2,'0')}${String(endDate.getDate()).padStart(2,'0')}`;
+    const clean = v=>String(v||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
+    const details = [...(e.songs || []).map(s=>`${s.title}${s.artist ? ' - '+s.artist : ''}`), e.comment || ''].filter(Boolean).join('\n');
+    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//DAHAM//Playlist//KO','BEGIN:VEVENT',
+      `DTSTART;VALUE=DATE:${start}`,`DTEND;VALUE=DATE:${end}`,
+      `SUMMARY:${clean(`다함 찬양 · ${e.theme || '주제 미정'}`)}`,
+      `DESCRIPTION:${clean(details)}`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'}));
+    link.download = `daham-${e.date}.ics`;
+    link.click();
+    setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+  });
 }
  
 document.getElementById('detailOverlay').addEventListener('click', (e)=>{
@@ -1519,8 +1511,10 @@ document.getElementById('detailOverlay').addEventListener('click', (e)=>{
 });
  
 document.getElementById('calGrid').addEventListener('click', (e)=>{
-  const cell = e.target.closest('.cal-cell.has-entry');
-  if(cell) openDayDetail(cell.dataset.date);
+  const cell = e.target.closest('.cal-cell[data-date]');
+  if(!cell) return;
+  if(cell.classList.contains('has-entry')) openDayDetail(cell.dataset.date);
+  else openAddForDate(cell.dataset.date);
 });
  
 document.getElementById('calPrev').addEventListener('click', ()=>{
@@ -1529,6 +1523,11 @@ document.getElementById('calPrev').addEventListener('click', ()=>{
 });
 document.getElementById('calNext').addEventListener('click', ()=>{
   calDate.setMonth(calDate.getMonth()+1);
+  renderCalendar();
+});
+document.getElementById('calToday').addEventListener('click', ()=>{
+  calDate = new Date();
+  calDate.setDate(1);
   renderCalendar();
 });
  
@@ -1873,6 +1872,13 @@ function openAdd(){
   resetModal();
   overlay.classList.add('open');
 }
+
+function openAddForDate(dateStr){
+  resetModal();
+  document.getElementById('f-date').value = dateStr;
+  document.getElementById('modalTitle').textContent = `${dateStr} 찬양 기록`;
+  overlay.classList.add('open');
+}
  
 function openEdit(id){
   const entry = entries.find(e=>e.id===id);
@@ -1939,610 +1945,6 @@ document.getElementById('saveBtn').addEventListener('click', async ()=>{
 
 
 
-/* ---------- v16: Transformers.js + Whisper 브라우저 전사 ---------- */
-let localAiFile = null;
-let localWhisper = null;
-let pendingLocalAiLyrics = '';
-
-function looksLikeBadSongTranscript(text){
-  const cleaned=String(text||'').replace(/[.,!?~…\n\r]/g,' ').replace(/\s+/g,' ').trim();
-  if(cleaned.length<20) return true;
-  const words=cleaned.split(' ').filter(Boolean);
-  if(words.length<5) return true;
-  const counts={};
-  for(const w of words) counts[w]=(counts[w]||0)+1;
-  const maxRepeat=Math.max(...Object.values(counts));
-  if(words.length>=12 && maxRepeat/words.length>0.42) return true;
-  if(/(?:네[ ,.]*){8,}|(?:예[ ,.]*){8,}|(?:아[ ,.]*){10,}/.test(text)) return true;
-  if((text.match(/�/g)||[]).length>=2) return true;
-  return false;
-}
-
-async function getLocalWhisper(){
-  if(localWhisper) return localWhisper;
-  const status = document.getElementById('musicAutoStatus');
-  status.textContent = '고정확도 Whisper Small 모델을 처음 다운로드하는 중… 처음 한 번은 시간이 더 걸릴 수 있어요.';
-  const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.2');
-  const device = navigator.gpu ? 'webgpu' : 'wasm';
-  localWhisper = await mod.pipeline(
-    'automatic-speech-recognition',
-    'onnx-community/whisper-small',
-    { device, dtype: device === 'webgpu' ? 'fp16' : 'q8' }
-  );
-  return localWhisper;
-}
-
-async function decodeAudioForWhisper(file){
-  const buf = await file.arrayBuffer();
-  const AC = window.AudioContext || window.webkitAudioContext;
-  const ctx = new AC({sampleRate:16000});
-  const decoded = await ctx.decodeAudioData(buf.slice(0));
-  const offline = new OfflineAudioContext(1, Math.ceil(decoded.duration*16000), 16000);
-  const source = offline.createBufferSource();
-  source.buffer = decoded;
-  source.connect(offline.destination);
-  source.start();
-  const rendered = await offline.startRendering();
-  const mono = rendered.getChannelData(0).slice();
-  try{ await ctx.close(); }catch(e){}
-  return mono;
-}
-
-async function saveLocalAiLyrics(text){
-  if(!activeMusicEntryId || activeMusicSongIndex == null || !text) return;
-  const entry = entries.find(x=>x.id===activeMusicEntryId);
-  if(!entry) return;
-  const songs = [...(entry.songs || [])];
-  const idx = Number(activeMusicSongIndex);
-  const current = songs[idx];
-  if(!current) return;
-  songs[idx] = {
-    ...current,
-    sheet:{
-      ...(current.sheet || {}),
-      lyrics:text.trim(),
-      lyricsSource:'Local Whisper AI'
-    }
-  };
-  await entriesRef.child(activeMusicEntryId).update({songs});
-  activeMusicSong = songs[idx];
-}
-
-document.getElementById('localAiPick').addEventListener('click',()=>{
-  document.getElementById('localAiAudio').click();
-});
-document.getElementById('localAiAudio').addEventListener('change',(e)=>{
-  localAiFile = e.target.files?.[0] || null;
-  document.getElementById('localAiFileName').textContent = localAiFile
-    ? `${localAiFile.name} · ${(localAiFile.size/1024/1024).toFixed(1)} MB`
-    : '선택된 파일 없음';
-  document.getElementById('localAiStart').disabled = !localAiFile;
-});
-document.getElementById('localAiStart').addEventListener('click', async()=>{
-  const status = document.getElementById('musicAutoStatus');
-  const btn = document.getElementById('localAiStart');
-  if(!localAiFile) return;
-  btn.disabled = true;
-  try{
-    const transcriber = await getLocalWhisper();
-    status.textContent = '음원을 읽고 한국어 가사를 AI로 전사하는 중…';
-    const audio = await decodeAudioForWhisper(localAiFile);
-    const result = await transcriber(audio, {
-      language:'ko',
-      task:'transcribe',
-      chunk_length_s:25,
-      stride_length_s:6,
-      return_timestamps:false,
-      condition_on_prev_tokens:false
-    });
-    const text = String(result?.text || '').trim();
-    if(!text) throw new Error('전사 결과가 비어 있어요.');
-    pendingLocalAiLyrics = text;
-    document.getElementById('localAiPreviewText').value = text;
-    document.getElementById('localAiPreview').style.display = 'block';
-    if(looksLikeBadSongTranscript(text)){
-      status.textContent = '반복 단어가 많은 비정상 전사로 판단했어요. 자동 저장하지 않았습니다.';
-      document.getElementById('musicSourceInfo').textContent = 'AI 결과를 아래에서 확인하거나 다시 전사해 주세요.';
-    }else{
-      status.textContent = 'AI 전사가 끝났어요. 아직 저장하지 않았습니다. 미리보기를 확인해 주세요.';
-      document.getElementById('musicSourceInfo').textContent = '가사 출처 후보: 브라우저 Whisper Small AI 전사';
-    }
-  }catch(e){
-    status.textContent = `무료 AI 전사 실패: ${e.message || e}`;
-  }finally{
-    btn.disabled = !localAiFile;
-  }
-});
-
-
-document.getElementById('localAiSave').addEventListener('click', async()=>{
-  const status=document.getElementById('musicAutoStatus');
-  const edited=document.getElementById('localAiPreviewText').value.trim();
-  if(!edited){status.textContent='저장할 가사가 비어 있어요.';return;}
-  try{
-    await saveLocalAiLyrics(edited);
-    pendingLocalAiLyrics='';
-    document.getElementById('localAiPreview').style.display='none';
-    status.textContent='확인한 가사를 Firebase에 저장했어요.';
-    document.getElementById('musicSourceInfo').textContent='가사 출처: 브라우저 Whisper AI 전사 · 사용자 확인';
-    renderMusicSheet();
-    document.querySelectorAll('.music-tab').forEach(b=>b.classList.toggle('active',b.dataset.musicTab==='lyrics'));
-    document.getElementById('guitarPane').style.display='none';
-    document.getElementById('lyricsPane').style.display='';
-  }catch(e){status.textContent=`가사 저장 실패: ${e.message||e}`;}
-});
-document.getElementById('localAiDiscard').addEventListener('click',()=>{
-  pendingLocalAiLyrics='';
-  document.getElementById('localAiPreviewText').value='';
-  document.getElementById('localAiPreview').style.display='none';
-  document.getElementById('musicAutoStatus').textContent='AI 전사 결과를 취소했어요. 다시 전사할 수 있습니다.';
-});
-
-/* ---------- v11: YouTube 메타데이터 + LRCLIB 무료 가사 검색 ---------- */
-const YT_KEY_STORAGE = 'daham_youtube_api_key_v1';
-
-function getStoredYoutubeKey(){
-  try { return localStorage.getItem(YT_KEY_STORAGE) || ''; } catch(e){ return ''; }
-}
-function setStoredYoutubeKey(v){
-  try { localStorage.setItem(YT_KEY_STORAGE, v); } catch(e){}
-}
-function getYouTubeIdV11(url){
-  if(!url) return '';
-  try{
-    const u = new URL(url);
-    if(u.hostname.includes('youtu.be')) return u.pathname.split('/').filter(Boolean)[0] || '';
-    if(u.hostname.includes('youtube.com')){
-      if(u.searchParams.get('v')) return u.searchParams.get('v');
-      const p = u.pathname.split('/').filter(Boolean);
-      if(['shorts','embed','live'].includes(p[0])) return p[1] || '';
-    }
-  }catch(e){}
-  const m = String(url).match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/);
-  return m ? m[1] : '';
-}
-function cleanYoutubeTitle(title){
-  return String(title || '')
-    .replace(/\[[^\]]*(official|lyrics?|lyric|audio|mv|music video|live|가사|찬양)[^\]]*\]/ig,' ')
-    .replace(/\([^)]*(official|lyrics?|lyric|audio|mv|music video|live|가사|찬양)[^)]*\)/ig,' ')
-    .split('|')[0]
-    .replace(/\s+/g,' ').trim();
-}
-function lyricSearchTitles(song, meta){
-  const values = [
-    song?.title || '',
-    meta?.title ? cleanYoutubeTitle(meta.title) : '',
-    meta?.title ? String(meta.title).split('|')[0].trim() : ''
-  ].filter(Boolean);
-  return [...new Set(values.map(v=>v.trim()).filter(Boolean))];
-}
-function lyricSearchArtists(song, meta){
-  const values = [song?.artist || '', meta?.channel || ''].filter(Boolean);
-  return [...new Set(values.map(v=>v.trim()).filter(Boolean))];
-}
-async function fetchYoutubeMeta(song){
-  const key = getStoredYoutubeKey();
-  if(!key) return null;
-  const id = getYouTubeIdV11(song.link || '');
-  if(!id) return null;
-  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${encodeURIComponent(id)}&key=${encodeURIComponent(key)}`;
-  const r = await fetch(url);
-  if(!r.ok){
-    let detail = '';
-    try { detail = (await r.json()).error?.message || ''; } catch(e){}
-    throw new Error(detail || `YouTube API 오류 (${r.status})`);
-  }
-  const data = await r.json();
-  const item = data.items && data.items[0];
-  if(!item) throw new Error('YouTube 영상 정보를 찾지 못했어요.');
-  const iso = item.contentDetails?.duration || '';
-  const dm = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-  const duration = dm ? ((Number(dm[1]||0)*3600)+(Number(dm[2]||0)*60)+Number(dm[3]||0)) : 0;
-  return {
-    title: item.snippet?.title || '',
-    channel: item.snippet?.channelTitle || '',
-    description: item.snippet?.description || '',
-    duration,
-    videoId: id
-  };
-}
-async function searchLrclib(title, artist){
-  const params = new URLSearchParams();
-  if(title) params.set('track_name', title);
-  if(artist) params.set('artist_name', artist);
-  const r = await fetch(`https://lrclib.net/api/search?${params.toString()}`, {
-    headers: {'Lrclib-Client':'DahamPlaylist v11 (https://ji-seong0470.github.io/dahamplaylist/)'}
-  });
-  if(r.status === 429) throw new Error('가사 검색 요청이 많아요. 잠시 후 다시 시도해 주세요.');
-  if(!r.ok) throw new Error(`가사 검색 오류 (${r.status})`);
-  const rows = await r.json();
-  if(!Array.isArray(rows) || !rows.length) return null;
-
-  const norm = s => String(s||'').toLowerCase().replace(/[\s\-_.()[\]{}'"`~!@#$%^&*+=,?<>:;|\\/]/g,'');
-  const target = norm(title);
-  rows.sort((a,b)=>{
-    const score = x => {
-      const n = norm(x.trackName || x.name);
-      let s = 0;
-      if(n === target) s += 100;
-      else if(n.includes(target) || target.includes(n)) s += 50;
-      if(artist && norm(x.artistName).includes(norm(artist))) s += 30;
-      if(x.plainLyrics) s += 10;
-      return s;
-    };
-    return score(b)-score(a);
-  });
-  return rows.find(x=>x.plainLyrics) || rows[0] || null;
-}
-
-
-function compactSongTitleVariants(song, meta){
-  const raw = [
-    song?.title || '',
-    meta?.title || '',
-    cleanYoutubeTitle(meta?.title || '')
-  ].filter(Boolean);
-
-  const noise = /(official|music\s*video|lyrics?|audio|live|mv|찬양|가사|예배|worship|청춘찬양단|cover|커버)/ig;
-  const vals = [];
-  for(const r of raw){
-    vals.push(r);
-    vals.push(String(r).split('|')[0]);
-    vals.push(String(r).split('｜')[0]);
-    vals.push(String(r).replace(/\[[^\]]*\]/g,' ').replace(/\([^)]*\)/g,' '));
-    vals.push(String(r).replace(noise,' '));
-  }
-  return [...new Set(vals.map(v=>String(v).replace(/\s+/g,' ').trim()).filter(v=>v.length>=2))];
-}
-
-async function searchLrclibQ(q){
-  const r = await fetch(`https://lrclib.net/api/search?q=${encodeURIComponent(q)}`, {
-    headers: {'Lrclib-Client':'DahamPlaylist v14 (https://ji-seong0470.github.io/dahamplaylist/)'}
-  });
-  if(r.status === 429) throw new Error('LRCLIB 요청이 많아요. 잠시 후 다시 시도해 주세요.');
-  if(!r.ok) return [];
-  const rows = await r.json();
-  return Array.isArray(rows) ? rows : [];
-}
-
-async function getLrclibExact(title, artist, duration){
-  if(!title || !artist) return null;
-  const p = new URLSearchParams({track_name:title, artist_name:artist});
-  if(duration) p.set('duration', String(Math.round(duration)));
-  const r = await fetch(`https://lrclib.net/api/get?${p.toString()}`, {
-    headers: {'Lrclib-Client':'DahamPlaylist v14 (https://ji-seong0470.github.io/dahamplaylist/)'}
-  });
-  if(!r.ok) return null;
-  const row = await r.json();
-  return row?.plainLyrics ? {...row, sourceName:'LRCLIB exact'} : null;
-}
-
-function chooseLrclibResult(rows, titles){
-  if(!Array.isArray(rows) || !rows.length) return null;
-  const norm = s => String(s||'').toLowerCase()
-    .replace(/[\s\-_.()[\]{}'"`~!@#$%^&*+=,?<>:;|\\/]/g,'');
-  const targets = titles.map(norm).filter(Boolean);
-  const scored = rows.filter(x=>x?.plainLyrics).map(x=>{
-    const n = norm(x.trackName || x.name);
-    let score = 0;
-    for(const t of targets){
-      if(n === t) score = Math.max(score, 100);
-      else if(n.includes(t) || t.includes(n)) score = Math.max(score, 65);
-    }
-    return {x,score};
-  }).sort((a,b)=>b.score-a.score);
-  return scored[0]?.score >= 65 ? {...scored[0].x, sourceName:'LRCLIB'} : null;
-}
-
-async function searchLyricsOvh(artist, title){
-  if(!artist || !title) return null;
-  const url = `https://api.lyrics.ovh/v1/${encodeURIComponent(artist)}/${encodeURIComponent(title)}`;
-  const r = await fetch(url);
-  if(r.status === 404) return null;
-  if(!r.ok) return null;
-  const data = await r.json();
-  const lyrics = String(data?.lyrics || '').trim();
-  if(!lyrics) return null;
-  return {
-    plainLyrics: lyrics,
-    trackName: title,
-    artistName: artist,
-    sourceName: 'Lyrics.ovh'
-  };
-}
-
-function extractYoutubeArtistCandidates(meta){
-  const vals = [];
-  const title = String(meta?.title || '');
-  const desc = String(meta?.description || '');
-  const channel = String(meta?.channel || '');
-  if(channel) vals.push(channel);
-
-  // Common YouTube title separators: "곡명 | 아티스트", "곡명 - 아티스트"
-  for(const sep of ['|','｜']){
-    const parts = title.split(sep).map(s=>s.trim()).filter(Boolean);
-    if(parts.length > 1) vals.push(...parts.slice(1));
-  }
-
-  // Bracketed performer/channel labels are useful for Korean worship uploads.
-  const brackets = [...title.matchAll(/\[([^\]]{2,40})\]/g)].map(m=>m[1]);
-  vals.push(...brackets);
-
-  // Common description labels, without trying to reproduce description text.
-  for(const line of desc.split(/\r?\n/).slice(0,30)){
-    const m = line.match(/(?:artist|아티스트|노래|찬양|singer|worship)\s*[:：]\s*(.{2,60})/i);
-    if(m) vals.push(m[1].trim());
-  }
-  return [...new Set(vals.map(v=>v.replace(/\[[^\]]*\]/g,'').trim()).filter(v=>v.length>=2 && v.length<=60))];
-}
-
-async function sleepV15(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-async function searchAllFreeLyrics(song, meta, onProgress){
-  const titles = compactSongTitleVariants(song, meta);
-  const artists = [...new Set([...lyricSearchArtists(song, meta), ...extractYoutubeArtistCandidates(meta)])];
-
-  // 1) Structured LRCLIB searches.
-  for(const title of titles){
-    for(const artist of artists.slice(0,6)){
-      onProgress?.(`LRCLIB 검색: “${title}” / ${artist}`);
-      try{
-        const r = await searchLrclib(title, artist);
-        if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
-      }catch(e){}
-      await sleepV15(220);
-    }
-    onProgress?.(`LRCLIB 제목 검색: “${title}”`);
-    try{
-      const r = await searchLrclib(title, '');
-      if(r?.plainLyrics) return {...r, sourceName:'LRCLIB'};
-    }catch(e){}
-    await sleepV15(220);
-  }
-
-  // 2) Broad q search using title, then title+artist combinations.
-  const queries = [];
-  for(const title of titles){
-    queries.push(title);
-    for(const artist of artists.slice(0,5)) queries.push(`${title} ${artist}`);
-  }
-  for(const q of [...new Set(queries)]){
-    onProgress?.(`확장 검색: “${q}”`);
-    try{
-      const rows = await searchLrclibQ(q);
-      const r = chooseLrclibResult(rows, titles);
-      if(r) return r;
-    }catch(e){}
-    await sleepV15(220);
-  }
-
-  // 3) Lyrics.ovh fallback.
-  for(const title of titles.slice(0,6)){
-    for(const artist of artists.slice(0,8)){
-      onProgress?.(`추가 가사 DB 검색: “${artist} - ${title}”`);
-      try{
-        const r = await searchLyricsOvh(artist, title);
-        if(r?.plainLyrics) return r;
-      }catch(e){}
-    }
-  }
-  return null;
-}
-async function saveAutoLyricsToFirebase(song, lyricsResult, meta){
-  if(!activeMusicEntryId || activeMusicSongIndex == null || !lyricsResult?.plainLyrics) return;
-  const entry = entries.find(x=>x.id===activeMusicEntryId);
-  if(!entry) return;
-  const songs = [...(entry.songs || [])];
-  const idx = Number(activeMusicSongIndex);
-  const current = songs[idx];
-  if(!current) return;
-
-  songs[idx] = {
-    ...current,
-    sheet: {
-      ...(current.sheet || {}),
-      lyrics: lyricsResult.plainLyrics,
-      lyricsSource: lyricsResult.sourceName || 'LRCLIB',
-      lyricsTrack: lyricsResult.trackName || lyricsResult.name || '',
-      lyricsArtist: lyricsResult.artistName || '',
-      youtubeTitle: meta?.title || current.sheet?.youtubeTitle || '',
-      youtubeChannel: meta?.channel || current.sheet?.youtubeChannel || ''
-    }
-  };
-  await entriesRef.child(activeMusicEntryId).update({songs});
-  activeMusicSong = songs[idx];
-}
-async function autoFindMusicData(){
-  if(!activeMusicSong) return;
-  const btn = document.getElementById('musicAutoSearch');
-  const status = document.getElementById('musicAutoStatus');
-  const source = document.getElementById('musicSourceInfo');
-  btn.disabled = true;
-  source.textContent = '';
-  try{
-    status.textContent = '곡 정보를 확인하고 있어요…';
-    let meta = null;
-    try { meta = await fetchYoutubeMeta(activeMusicSong); }
-    catch(e){
-      // A missing/restricted YouTube key should not block a title-based LRCLIB search.
-      status.textContent = `YouTube 정보 확인 실패: ${e.message} — 등록된 곡 제목으로 가사를 찾아볼게요.`;
-    }
-
-    const titles = lyricSearchTitles(activeMusicSong, meta);
-    if(!titles.length) throw new Error('검색할 곡 제목이 없어요.');
-
-    const result = await searchAllFreeLyrics(activeMusicSong, meta, msg => {
-      status.textContent = msg;
-    });
-
-    if(!result || !result.plainLyrics){
-      status.textContent = '무료 가사 데이터베이스의 확장 검색에서도 찾지 못했어요. YouTube 영상은 그대로 재생할 수 있어요.';
-      source.textContent = meta ? `YouTube: ${meta.title}` : '';
-      return;
-    }
-
-    status.textContent = '가사를 찾았어요. Firebase에 저장했습니다.';
-    const foundTitle = result.trackName || result.name || titles[0];
-    source.textContent = `가사 출처: ${result.sourceName || '무료 가사 DB'} · 검색 결과: ${foundTitle}${result.artistName ? ' — '+result.artistName : ''}`;
-    await saveAutoLyricsToFirebase(activeMusicSong, result, meta);
-    renderMusicSheet();
-    // Switch to lyrics tab so the result is immediately visible.
-    document.querySelectorAll('.music-tab').forEach(b=>b.classList.toggle('active', b.dataset.musicTab==='lyrics'));
-    document.getElementById('guitarPane').style.display = 'none';
-    document.getElementById('lyricsPane').style.display = '';
-  }catch(e){
-    status.textContent = `자동 검색 실패: ${e.message}`;
-  }finally{
-    btn.disabled = false;
-  }
-}
-
-let activeMusicEntryId = null;
-let activeMusicSongIndex = null;
-
-document.getElementById('musicApiToggle').addEventListener('click', ()=>{
-  const box = document.getElementById('musicApiBox');
-  box.style.display = box.style.display === 'none' ? 'flex' : 'none';
-  if(box.style.display !== 'none'){
-    document.getElementById('youtubeApiKeyInput').value = getStoredYoutubeKey();
-  }
-});
-document.getElementById('youtubeApiSave').addEventListener('click', ()=>{
-  const v = document.getElementById('youtubeApiKeyInput').value.trim();
-  if(!v) return;
-  setStoredYoutubeKey(v);
-  document.getElementById('musicApiBox').style.display = 'none';
-  document.getElementById('musicAutoStatus').textContent = 'YouTube API 키를 이 브라우저에 저장했어요.';
-});
-document.getElementById('musicAutoSearch').addEventListener('click', autoFindMusicData);
-
-
-/* ---------- v10: 기타 악보 / 가사 ---------- */
-const MUSIC_KEYS = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-let activeMusicSong = null;
-let activeMusicKey = null;
-let lyricsFontSize = 20;
-
-const musicSheetOverlay = document.getElementById('musicSheetOverlay');
-const keySelect = document.getElementById('keySelect');
-keySelect.innerHTML = MUSIC_KEYS.map(k=>`<option value="${k}">${k}</option>`).join('');
-
-function normalizeKey(k){
-  const flats = {'Db':'C#','Eb':'D#','Gb':'F#','Ab':'G#','Bb':'A#'};
-  return flats[k] || k;
-}
-function transposeRoot(root, steps){
-  root = normalizeKey(root);
-  const idx = MUSIC_KEYS.indexOf(root);
-  if(idx < 0) return root;
-  return MUSIC_KEYS[(idx + steps + 120) % 12];
-}
-function transposeChord(chord, steps){
-  // C#m7, Bb, G/B, Fadd9 같은 일반 코드의 루트와 슬래시 베이스를 변환
-  return chord.replace(/^([A-G](?:#|b)?)([^/]*)(?:\/([A-G](?:#|b)?))?$/, (_,root,tail,bass)=>{
-    return transposeRoot(root,steps) + tail + (bass ? '/' + transposeRoot(bass,steps) : '');
-  });
-}
-function transposeChordText(text, steps){
-  if(!text || !steps) return text || '';
-  // [G], [Em7], [D/F#] 형식을 우선 지원
-  return text.replace(/\[([A-G](?:#|b)?(?:m|maj|min|dim|aug|sus|add)?\d*(?:\/[A-G](?:#|b)?)?)\]/g,
-    (_, chord)=>'[' + transposeChord(chord, steps) + ']');
-}
-function songSheet(song){
-  return song && song.sheet ? song.sheet : null;
-}
-function renderMusicSheet(){
-  const song = activeMusicSong;
-  if(!song) return;
-  const sheet = songSheet(song);
-  const guitar = document.getElementById('guitarContent');
-  const lyrics = document.getElementById('lyricsContent');
-  const originalKey = normalizeKey((sheet && sheet.key) || '');
-  const currentKey = activeMusicKey || originalKey || '';
-  document.getElementById('currentKey').textContent = currentKey || '-';
-  keySelect.value = currentKey || 'C';
-  keySelect.disabled = !originalKey;
-  document.getElementById('keyDown').disabled = !originalKey;
-  document.getElementById('keyUp').disabled = !originalKey;
-
-  if(!sheet || (!sheet.chords && !sheet.lyrics)){
-    const msg = `<div class="sheet-empty"><strong>악보·가사 데이터가 아직 없어요.</strong>
-      YouTube 링크는 등록되어 있습니다. 다음 단계에서 자동 검색 기능을 연결하면 이곳에 가사와 기타 코드가 표시됩니다.</div>`;
-    guitar.innerHTML = msg;
-    lyrics.innerHTML = msg;
-    document.getElementById('capoInfo').textContent = '';
-    return;
-  }
-
-  let steps = 0;
-  if(originalKey && currentKey){
-    steps = MUSIC_KEYS.indexOf(currentKey) - MUSIC_KEYS.indexOf(originalKey);
-  }
-  guitar.textContent = sheet.chords ? transposeChordText(sheet.chords, steps) : '기타 코드 데이터가 아직 없습니다.';
-  lyrics.textContent = sheet.lyrics || '가사 데이터가 아직 없습니다.';
-  document.getElementById('capoInfo').textContent = sheet.capo ? `Capo ${sheet.capo}` : '';
-}
-function openMusicSheet(entryId, songIndex){
-  const entry = entries.find(x=>x.id===entryId);
-  const song = entry && (entry.songs || [])[Number(songIndex)];
-  if(!song) return;
-  activeMusicEntryId = entryId;
-  activeMusicSongIndex = Number(songIndex);
-  activeMusicSong = song;
-  const sheet = songSheet(song);
-  activeMusicKey = normalizeKey((sheet && sheet.key) || '') || null;
-  lyricsFontSize = 20;
-  document.getElementById('lyricsContent').style.fontSize = lyricsFontSize + 'px';
-  document.getElementById('musicSheetTitle').textContent = song.title || '악보·가사';
-  document.getElementById('musicSheetArtist').textContent = song.artist || '';
-  const savedSheet = songSheet(song);
-  document.getElementById('musicAutoStatus').textContent =
-    savedSheet?.lyrics ? '저장된 가사가 있어요. 필요하면 다시 자동 검색할 수 있습니다.' : 'YouTube 링크만으로 가사를 여러 방식으로 찾아볼 준비가 됐어요.';
-  document.getElementById('musicSourceInfo').textContent =
-    savedSheet?.lyricsSource ? `가사 출처: ${savedSheet.lyricsSource}${savedSheet.lyricsTrack ? ' · '+savedSheet.lyricsTrack : ''}` : '';
-  document.querySelectorAll('.music-tab').forEach((b,i)=>b.classList.toggle('active', i===0));
-  document.getElementById('guitarPane').style.display = '';
-  document.getElementById('lyricsPane').style.display = 'none';
-  renderMusicSheet();
-  musicSheetOverlay.classList.add('open');
-}
-document.addEventListener('click', e=>{
-  const btn = e.target.closest('[data-music-entry]');
-  if(btn){
-    e.preventDefault(); e.stopPropagation();
-    openMusicSheet(btn.dataset.musicEntry, btn.dataset.musicSong);
-  }
-});
-document.querySelectorAll('.music-tab').forEach(btn=>btn.addEventListener('click', ()=>{
-  document.querySelectorAll('.music-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const guitar = btn.dataset.musicTab === 'guitar';
-  document.getElementById('guitarPane').style.display = guitar ? '' : 'none';
-  document.getElementById('lyricsPane').style.display = guitar ? 'none' : '';
-}));
-document.getElementById('musicSheetClose').addEventListener('click', ()=>musicSheetOverlay.classList.remove('open'));
-musicSheetOverlay.addEventListener('click', e=>{ if(e.target===musicSheetOverlay) musicSheetOverlay.classList.remove('open'); });
-document.getElementById('keyDown').addEventListener('click', ()=>{
-  if(!activeMusicKey) return;
-  activeMusicKey = transposeRoot(activeMusicKey,-1); renderMusicSheet();
-});
-document.getElementById('keyUp').addEventListener('click', ()=>{
-  if(!activeMusicKey) return;
-  activeMusicKey = transposeRoot(activeMusicKey,1); renderMusicSheet();
-});
-keySelect.addEventListener('change', ()=>{ activeMusicKey = keySelect.value; renderMusicSheet(); });
-document.getElementById('lyricsSmaller').addEventListener('click', ()=>{
-  lyricsFontSize = Math.max(15, lyricsFontSize-2);
-  document.getElementById('lyricsContent').style.fontSize = lyricsFontSize+'px';
-});
-document.getElementById('lyricsLarger').addEventListener('click', ()=>{
-  lyricsFontSize = Math.min(34, lyricsFontSize+2);
-  document.getElementById('lyricsContent').style.fontSize = lyricsFontSize+'px';
-});
-
-
-
 /* ---------- v20 홈 대시보드 ---------- */
 const HOME_FAV_KEY = 'daham_favorite_songs_v20';
 function songKey(s){ return `${s.title||''}||${s.artist||''}||${s.link||''}`; }
@@ -2572,11 +1974,11 @@ function recentCard(s){
   </div>`;
 }
 function miniSong(s,i,bestMode=false){
-  return `<div class="mini-song">
-    <div class="mini-rank ${i===0&&bestMode?'gold':''}">${bestMode?i+1:'♫'}</div>
-    <div><b>${escapeHtml(s.title||'찬양')}</b><small>${escapeHtml(s.date||'')}${s.artist?' · '+escapeHtml(s.artist):''}</small></div>
-    ${s.link?`<button class="mini-play" type="button" data-home-play="${escapeHtml(s.link)}" title="YouTube 열기">▶</button>`:`<button class="heart-btn ${isFavorite(s)?'on':''}" type="button" data-fav="${encodeURIComponent(songKey(s))}">${isFavorite(s)?'♥':'♡'}</button>`}
-  </div>`;
+  return `<div class="mini-song-wrap"><div class="mini-song">
+      <div class="mini-rank ${i===0&&bestMode?'gold':''}">${bestMode?i+1:'♫'}</div>
+      <div><b>${escapeHtml(s.title||'찬양')}</b><small>${escapeHtml(s.date||'')}${s.artist?' · '+escapeHtml(s.artist):''}</small></div>
+      ${s.link?`<button class="mini-play" type="button" data-url="${escapeHtml(s.link)}" data-title="${escapeHtml(s.title||'찬양')}" onclick="toggleHomeSongPlayer(event)" title="홈페이지에서 재생">▶</button>`:`<button class="heart-btn ${isFavorite(s)?'on':''}" type="button" data-fav="${encodeURIComponent(songKey(s))}">${isFavorite(s)?'♥':'♡'}</button>`}
+    </div><div class="inline-player"></div></div>`;
 }
 function renderHomeDashboard(){
   const songs=flatSongs();
@@ -2598,7 +2000,6 @@ function renderHomeDashboard(){
     const key=decodeURIComponent(btn.dataset.fav);
     const s=songs.find(x=>songKey(x)===key); if(s) toggleFavoriteSong(s);
   });
-  document.querySelectorAll('[data-home-play]').forEach(btn=>btn.onclick=()=>window.open(btn.dataset.homePlay,'_blank','noopener'));
 }
 function showHome(){
   document.getElementById('homeDashboard').style.display='';
@@ -2708,6 +2109,14 @@ function getYouTubeVideoId(url){
   }catch(e){}
   return null;
 }
+function getYouTubeEmbedUrl(id){
+  const params = new URLSearchParams({autoplay:'1',playsinline:'1',rel:'0'});
+  if(location.protocol === 'http:' || location.protocol === 'https:'){
+    params.set('origin', location.origin);
+    params.set('widget_referrer', location.href);
+  }
+  return `https://www.youtube.com/embed/${encodeURIComponent(id)}?${params.toString()}`;
+}
 function toggleSongPlayer(event){
   event.preventDefault();
   event.stopPropagation();
@@ -2723,6 +2132,7 @@ function toggleSongPlayer(event){
     el.innerHTML = '';
   });
   document.querySelectorAll('.listen-btn').forEach(el => el.textContent = '▶ 듣기');
+  document.querySelectorAll('.mini-play').forEach(el => el.textContent = '▶');
   if(alreadyOpen) return;
 
   const id = getYouTubeVideoId(url);
@@ -2730,8 +2140,7 @@ function toggleSongPlayer(event){
     holder.innerHTML = '<div class="player-fallback">이 링크는 페이지 안에서 재생할 수 없어요. <a href="' +
       escapeHtml(url) + '" target="_blank" rel="noopener">원본 링크 열기</a></div>';
   }else{
-    holder.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
-      '?autoplay=1&playsinline=1&rel=0" title="' + escapeHtml(title) +
+    holder.innerHTML = '<iframe src="' + escapeHtml(getYouTubeEmbedUrl(id)) + '" title="' + escapeHtml(title) +
       '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
       'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' +
       '<div class="player-fallback">외부 재생이 제한된 영상이면 <a href="' + escapeHtml(url) +
@@ -2739,6 +2148,39 @@ function toggleSongPlayer(event){
   }
   holder.classList.add('open');
   btn.textContent = '▲ 닫기';
+}
+
+function toggleHomeSongPlayer(event){
+  event.preventDefault();
+  event.stopPropagation();
+  const btn = event.currentTarget;
+  const wrap = btn.closest('.mini-song-wrap');
+  const holder = wrap && wrap.querySelector('.inline-player');
+  if(!holder) return;
+  const alreadyOpen = holder.classList.contains('open');
+
+  document.querySelectorAll('.inline-player.open').forEach(el=>{
+    el.classList.remove('open');
+    el.innerHTML = '';
+  });
+  document.querySelectorAll('.listen-btn').forEach(el=>el.textContent='▶ 듣기');
+  document.querySelectorAll('.mini-play').forEach(el=>el.textContent='▶');
+  if(alreadyOpen) return;
+
+  const url = btn.dataset.url || '';
+  const id = getYouTubeVideoId(url);
+  if(!id){
+    holder.innerHTML = '<div class="player-fallback">이 링크 형식은 홈페이지에서 재생할 수 없어요. <a href="' +
+      escapeHtml(url) + '" target="_blank" rel="noopener">원본 링크 열기</a></div>';
+  }else{
+    holder.innerHTML = '<iframe src="' + escapeHtml(getYouTubeEmbedUrl(id)) + '" title="' + escapeHtml(btn.dataset.title || 'YouTube 찬양 영상') +
+      '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+      'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' +
+      '<div class="player-fallback">영상 소유자가 외부 재생을 막은 경우에만 <a href="' + escapeHtml(url) +
+      '" target="_blank" rel="noopener">YouTube에서 열기</a></div>';
+  }
+  holder.classList.add('open');
+  btn.textContent = '▲';
 }
 
 </script>
